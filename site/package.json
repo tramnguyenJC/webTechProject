@@ -1,22 +1,16 @@
 {
-  "name": "webtech_project",
-  "version": "1.0.0",
-  "description": "A website for an Asian store, developed for the WebTech course",
-  "main": "index.js",
+  "name": "site",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tramnguyenJC/webTechProject.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tramnguyenJC/webTechProject/issues"
-  },
-  "homepage": "https://github.com/tramnguyenJC/webTechProject#readme",
   "dependencies": {
-    "bson": "^4.0.1"
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0"
   }
 }
