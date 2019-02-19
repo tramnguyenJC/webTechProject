@@ -6,8 +6,6 @@ const db = new sqlite3.Database('store.db');
 
 router.get('/', function(req, res, next) {
   res.send('All products goes here');
-  //const nameToLookup = req.params.userid; // matches ':userid' above
-
 });
 
 
@@ -19,15 +17,18 @@ router.get('/:productid', (req, res) => {
     'SELECT * FROM Products WHERE id=$id',
     // parameters to SQL query:
     {
-      $id: idToLookup
-      
+      $id: idToLookup   
     },
     // callback function to run when the query finishes:
     (err, rows) => {
-      p = rows[0];
-      console.log(p);
+      product = rows[0];
       if (rows.length != 0) {
-        res.render('product', { title: p['name'], imgUrl: p['imgUrl'] });
+        res.render('product', { 
+          name: product['name'],
+          price: product['price'],
+          category: product['category'],
+          quantity: product['quantity'],
+          imgUrl: product['imgUrl']});
       } else {
         res.send({}); // failed, so return an empty object instead of undefined
       }
