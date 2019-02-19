@@ -3,7 +3,7 @@ const db = new sqlite3.Database('store.db');
 
 db.serialize(() => {
   // create a new database table:
-  db.run("CREATE TABLE Products (id, name, category, price, quantity)");
+  db.run("CREATE TABLE Products (id, name, category, price, quantity, imageUrl)");
 
   // insert 3 rows of data:
   db.run("INSERT INTO Products values (1, 'beef', 'dryproducts', 1, 20)");

@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:productid', (req, res) => {
-  const idToLookup = req.params.productid; // matches ':productid' above
+  const idToLookup = Number(req.params.productid); // matches ':productid' above
   
   console.log(idToLookup);
   // db.all() fetches all results from an SQL query into the 'rows' variable:
