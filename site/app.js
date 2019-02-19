@@ -1,9 +1,10 @@
 var createError = require('http-errors');
+var cookieParser = require('cookie-parser');
 var express = require('express');
 var http = require('http');
-var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var path = require('path');
+var sqlite3 = require('sqlite3').verbose()
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
