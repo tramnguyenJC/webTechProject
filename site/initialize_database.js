@@ -3,14 +3,10 @@ const db = new sqlite3.Database('store.db');
 
 db.serialize(() => {
   // create a new database table:
-  db.run('CREATE TABLE IF NOT EXISTS Products('+
-    '(id INTEGER PRIMARY KEY AUTO INCREMENT,' +
-    'name VARCHAR(255) NOT NULL,'+
-    'category VARCHAR(255))');
+  db.run("CREATE TABLE Products (id, name, category, price, quantity)");
 
   // insert 3 rows of data:
-  db.run("INSERT INTO Products (id, name, category)"
-    " VALUES (1, 'Jajamyeong Ramen', 'Food')");
+  db.run("INSERT INTO Products values (1, 'beef', 'dryproducts', 1, 20)");
   console.log('successfully created the Products table in store.db');
 
   // print them out to confirm their contents:
