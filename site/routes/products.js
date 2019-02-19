@@ -10,28 +10,33 @@ router.get('/', function(req, res, next) {
 
 });
 
+
 router.get('/:productid', (req, res) => {
-  const idToLookup = req.params.productid; // matches ':productid' above
+  const idToLookup = Number(req.params.productid); // matches ':productid' above
   
-  console.log(idToLookup);
   // db.all() fetches all results from an SQL query into the 'rows' variable:
   db.all(
     'SELECT * FROM Products WHERE id=$id',
     // parameters to SQL query:
     {
       $id: idToLookup
+      
     },
     // callback function to run when the query finishes:
     (err, rows) => {
-      console.log(rows);
+      p = rows[0];
+      console.log(p);
       if (rows.length != 0) {
-          console.log('h');
-        res.send(rows[0]);
+        res.render('product', { title: p['name'], imgUrl: p['imgUrl'] });
       } else {
         res.send({}); // failed, so return an empty object instead of undefined
       }
     }
   );
 });
+
+
+
+
 
 module.exports = router;
