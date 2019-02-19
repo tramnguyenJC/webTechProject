@@ -8,4 +8,7 @@ install dependencies:
 $ npm install
 
 run the app:
+Either:
 $ DEBUG=site:* npm start
+Or: 
+nodemon app.js
