@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= name %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= name %></h1>
-    <p>Welcome to <%= name %></p>
-    <img src='<%= imgUrl %>' height="80" width="80">
-  </body>
-</html>
+<% include partials/header %>
+
+<h1><%= name %></h1>
+<p>Welcome to <%= name %></p>
+<img src='<%= imgUrl %>' alt='<%= name %>'>
+
+<% include partials/footer %>

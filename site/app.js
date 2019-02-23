@@ -1,3 +1,4 @@
+"use strict";
 var createError = require('http-errors');
 var cookieParser = require('cookie-parser');
 var express = require('express');
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', indexRouter);
+app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 
