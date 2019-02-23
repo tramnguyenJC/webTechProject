@@ -6,6 +6,7 @@ var http = require('http');
 var logger = require('morgan');
 var path = require('path');
 var sqlite3 = require('sqlite3').verbose()
+var database = require('./database.js')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -50,5 +51,18 @@ http.createServer(app).listen(app.get('port'),
   function(){
     console.log("Express server listening on port " + app.get('port'));
 });
+
+// Temporarily add data to database. After implementing feature to add
+// products on the website, get rid of this.
+var product = {
+	"id": 1,
+	"name": "beef ramen",
+	"category": "dry products",
+	"price": 1,
+	"quantity": 20,
+	"imgUrl": "/images/beeframen.jpeg"
+};
+// database.createDatabase();
+// database.insertProduct(product);
 
 module.exports = app;

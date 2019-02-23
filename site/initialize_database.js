@@ -11,8 +11,6 @@ db.serialize(() => {
     "quantity INT, " +
     "imgUrl TEXT)");
 
-  // db.run("CREATE TABLE Products (id, name, category, price, quantity, imgUrl)");
-
   // insert 3 rows of data:
   db.run("INSERT INTO Products (id, name, category, price, quantity, imgUrl) " +
          "VALUES (1, 'beef', 'dryproducts', 1, 20, '/images/beeframen.jpeg')");
