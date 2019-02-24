@@ -5,12 +5,12 @@ var express = require('express');
 var http = require('http');
 var logger = require('morgan');
 var path = require('path');
-var sqlite3 = require('sqlite3').verbose()
 var database = require('./database.js')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
+var contactRouter = require('./routes/contact');
 
 var app = express();
 
@@ -30,6 +30,7 @@ app.use('/', indexRouter);
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
+app.use('/contact', contactRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -52,8 +53,8 @@ http.createServer(app).listen(app.get('port'),
     console.log("Express server listening on port " + app.get('port'));
 });
 
-// Temporarily add data to database. After implementing feature to add
-// products on the website, get rid of this.
+// Temporarily add data to database. After implementing feature for admin 
+// to add products on the website, get rid of this.
 var product = {
 	"id": 1,
 	"name": "beef ramen",

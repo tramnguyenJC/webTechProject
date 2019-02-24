@@ -1,8 +1,8 @@
 "use strict";
-
 const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('data.db');
 
+// Create the database.
 exports.createDatabase = function() {
   db.serialize(() => {
   // create a new database table:
@@ -18,7 +18,11 @@ exports.createDatabase = function() {
   });
 }
 
+////////////////////////////////////////////////////////////////////////////////
+// PRODUCTS METHODS
 
+// Insert product into the database
+// @param product: dict object that contains information about the product.
 exports.insertProduct = function(product) {
   db.serialize(() => {
     var command = "INSERT INTO Products (id, name, category, price, quantity," +
@@ -30,6 +34,9 @@ exports.insertProduct = function(product) {
   });
 }
 
+// Retrieve product in database by product id
+// @param productId: given productId
+// @param callback: matching product to be returned
 exports.getProductById = function(productId, callback) {
   db.serialize(() => {
     // db.all() fetches all results from an SQL query into the 'rows' variable:
@@ -65,6 +72,4 @@ exports.getAllProducts = function(callback) {
       }
     );
   });
-
 }
-
