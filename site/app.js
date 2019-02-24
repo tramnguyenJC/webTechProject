@@ -62,7 +62,15 @@ var product = {
 	"quantity": 20,
 	"imgUrl": "/images/beeframen.jpeg"
 };
+var product2 = {
+	"id": 2,
+	"name": "beef ramen2",
+	"category": "dry products",
+	"price": 1,
+	"quantity": 20,
+	"imgUrl": "/images/beeframen.jpeg"
+};
 // database.createDatabase();
 // database.insertProduct(product);
-
+// database.insertProduct(product2);
 module.exports = app;

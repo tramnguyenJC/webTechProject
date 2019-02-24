@@ -50,3 +50,21 @@ exports.getProductById = function(productId, callback) {
   });
 }
 
+exports.getAllProducts = function(callback) {
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    db.all(
+      'SELECT * FROM Products',
+      // callback function to run when the query finishes:
+      (err, rows) => {
+        if (rows.length != 0) {
+          callback(rows);
+        } else {
+          callback(null);
+        }
+      }
+    );
+  });
+
+}
+

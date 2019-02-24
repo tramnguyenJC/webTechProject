@@ -5,7 +5,18 @@ const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('data.db');
 
 router.get('/', function(req, res, next) {
-  res.send('All products goes here');
+
+  database.getAllProducts(function(products){
+     var product2 = {
+	"id": 2,
+	"name": "beef ramen2",
+	"category": "dry products",
+	"price": 1,
+	"quantity": 20,
+	"imgUrl": "/images/beeframen.jpeg"
+     };
+    res.render('product', {products: product2})
+  })                   
 });
 
 router.get('/:productid', (req, res) => {
