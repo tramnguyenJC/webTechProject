@@ -4,11 +4,7 @@ General Styling
 */
 
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-main {
-	padding-top: 20px;
+  font: 15px 'Raleway', sans-serif;
 }
 
 a {
@@ -19,11 +15,66 @@ a {
 ********************************************************************************
 Header Styling
 */
-#header .nav 
+header {
+	font: 16px 'Quicksand', sans-serif;
+}
 
+.navbar-brand {
+	font-family: 'Noto Serif SC', serif;
+	font-size: 2em;
+	font-weight: 900;
+}
 
+/*******************************************************************************
+********************************************************************************
+Index Page Styling
+*/
+#carousel img {
+	width: 100%;
+	object-fit: cover;
+	height: 400px !important;
+}
 
+#shop-all {
+	padding: 30px 0 30px 0;
+	text-align: center;
+}
 
+#contact {
+  padding: 20px 0;
+  text-align:center;
+}
+
+#contact .contact-info {
+	margin-top: 20px 0px;
+}
+
+#contact .contact-info h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #112363;
+}
+
+#contact .contact-info a {
+  color: #4869df;
+}
+
+#contact .contact-info a:hover {
+  color: #f82249;
+}
+
+#contact .contact-fax,
+#contact .contact-phone,
+#contact .contact-email {
+  margin-bottom: 20px;
+}
+
+.contact-form {
+	text-align: center;
+	margin: 40px;
+}
 /*******************************************************************************
 ********************************************************************************
 Products Styling
