@@ -11,6 +11,10 @@ a {
   color: #00B7FF;
 }
 
+.centeralign {
+  text-align: center;
+}
+
 /*******************************************************************************
 ********************************************************************************
 Header Styling
@@ -48,7 +52,7 @@ Index Page Styling
 
 #contact {
   padding: 20px 0;
-  text-align:center;
+  text-align: center;
 }
 
 #contact a {
@@ -56,13 +60,17 @@ Index Page Styling
 	text-decoration: none;
 }
 
+.contact-description {
+	margin: 10px 20% 30px 20%;
+}
+
 #contact .contact-info {
-	margin-top: 20px 0px;
+	margin-top: 10px;
 }
 
 #contact .contact-info h3 {
   font-size: 18px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   font-weight: bold;
   text-transform: uppercase;
   color: #112363;
@@ -84,7 +92,7 @@ Index Page Styling
 
 .contact-form {
 	text-align: center;
-	margin: 40px;
+	margin: 20px 40px 20px 100px;
 }
 
 /*******************************************************************************

@@ -46,6 +46,7 @@ Contact Section
 	<div class="container">
 		<a href="#contact" id = "contact-header"><h2>Contact Us</h2></a>
 		<br>
+		<p class="centeralign contact-description"> 京华 provides a variety of Asian snacks, Chinese cooking ingredients, popular drinks, and more. We are open from <em>8 am - 6 pm </em> Monday - Saturday, closed on national holidays.</p>
 		<div class="row contact-info">
 			<div class="col-md-4">
 				<div class="contact-phone">
@@ -72,16 +73,16 @@ Contact Section
 	<div class ="row contact-form">
 		<div class="col-md-6">
 			<p> Please fill out the form below to submit any suggestion or query to us. </p>
-			<form >
+			<form action="/contact" id="contact-form" method="post" role="form">
 			<!-- Name -->
-			<input type="text" id="form-name" class="form-control mb-4" placeholder="Name">
+			<input type="text" id="name" name="name" class="form-control mb-4" placeholder="Name" required="required">
 			<!-- Email -->
-			<input type="email" id="form-email" class="form-control mb-4" placeholder="E-mail">
+			<input type="email" id="email" name="email" class="form-control mb-4" placeholder="E-mail" required="required">
 			<!-- Email Subject -->
-			<input type="text" id="form-subject" class="form-control mb-4" placeholder="Subject">
+			<input type="text" id="subject" name="subject" class="form-control mb-4" placeholder="Subject" required="required">
 			<!-- Message -->
 			<div class="form-group">
-				<textarea class="form-control rounded-0" id="form-message" rows="3" placeholder="Message"></textarea>
+				<textarea class="form-control rounded-0" name="message" id="message" rows="3" placeholder="Message" required="required"></textarea>
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>

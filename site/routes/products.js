@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var database = require('../database.js')
+const asyncHandler = require('express-async-handler')
 
-router.get('/', function(req, res, next) {
-
+router.get('/', (req, res, next) => {
   database.getAllProducts(function(products){
     res.render('products', {products: products})
   })                   
@@ -15,12 +15,7 @@ router.get('/:productid', (req, res) => {
   database.getProductById(productId, function(product) {
     // If the retrieved product is not null (the product Id exists).
     if (product) {
-      res.render('products', { 
-      name: product['name'],
-      price: product['price'],
-      category: product['category'],
-      quantity: product['quantity'],
-      imgUrl: product['imgUrl']});
+      res.render('product', { product: product})
     } else {
       res.send("No product with id " + productId + " exists.");
     }
