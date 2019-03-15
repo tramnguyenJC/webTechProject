@@ -4,6 +4,7 @@ General Styling
 */
 
 body {
+  padding-top: ;
   font: 15px 'Raleway', sans-serif;
 }
 
@@ -13,6 +14,12 @@ a {
 
 .centeralign {
   text-align: center;
+}
+
+@media (min-width: 979px) {
+    body {
+        padding-top: 70px;
+    }
 }
 
 /*******************************************************************************
