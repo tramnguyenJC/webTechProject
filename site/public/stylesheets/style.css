@@ -22,6 +22,10 @@ a {
     }
 }
 
+.section-bg {
+	background-color: #F5F9FA;
+}
+
 /*******************************************************************************
 ********************************************************************************
 Header Styling
@@ -34,6 +38,68 @@ header {
 	font-family: 'Noto Serif SC', serif;
 	font-size: 2em;
 	font-weight: 900;
+}
+
+.navbar .container {
+	text-align: center;
+}
+
+#searchicon {
+	margin-left: 10px;
+}
+
+.navbar {
+	background-image: none;
+	background-color: white !important;
+}
+
+.navbar-scrolled button,
+.navbar-scrolled div,
+.navbar-scrolled a {
+	color: white !important;
+	border-color: white !important;
+}
+
+.navbar-scrolled {
+	opacity: 0.98;
+	background-color: #353535 !important;
+}
+
+.navbar a {
+	position: relative;
+	display: inline-block;
+	outline: none;
+	color: black;
+	text-decoration: none;
+	letter-spacing: 1px;
+	margin: 0 5px;
+}
+
+/* Source for hovering effects:
+https://tympanus.net/codrops/2013/08/06/creative-link-effects/
+Effect style 3 */
+.navbar a::after {
+	position: absolute;
+	top: 90%;
+	left: 0;
+	width: 100%;
+	height: 3px;
+	background: rgba(0, 0, 0, 0.5);
+	content: '';
+	opacity: 0;
+	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+	-moz-transition: opacity 0.3s, -moz-transform 0.3s;
+	transition: opacity 0.3s, transform 0.3s;
+	-webkit-transform: translateY(10px);
+	-moz-transform: translateY(10px);
+	transform: translateY(10px);
+}
+.navbar a:hover::after,
+.navbar a:focus::after {
+	opacity: 1;
+	-webkit-transform: translateY(0px);
+	-moz-transform: translateY(0px);
+	transform: translateY(0px);
 }
 
 /*******************************************************************************
