@@ -8,11 +8,6 @@ $(document).ready(function(){
 			$(".navbar").removeClass("navbar-scrolled");
 			$(".navbar a").removeClass("navbar-scrolled");
 		}
-
-		if ($(window).scrollTop() > 200) {
-			$(".navbar").addClass("navbar-scrolled");
-			$(".navbar a").addClass("navbar-scrolled");	
-		}
 	});
 });
 
