@@ -57,6 +57,7 @@ exports.getProductById = function(productId, callback) {
   });
 }
 
+// Retrieve all products in database
 exports.getAllProducts = function(callback) {
   db.serialize(() => {
     // db.all() fetches all results from an SQL query into the 'rows' variable:
