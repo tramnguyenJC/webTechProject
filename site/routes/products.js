@@ -3,19 +3,22 @@ var router = express.Router();
 var database = require('../database.js')
 
 router.get('/', function(req, res, next) {
-
+    
+    var posts = [
+    {title: "Post 1", name: "Danny"},
+    {title: "Post 2", name: "Alex"},
+    {title: "Post 3", name: "Matt"},
+    {title: "Post 4", name: "Manny"}
+    ];
+    
   database.getAllProducts(function(products){
-     var product2 = {
-	"id": 2,
-	"name": "beef ramen2",
-	"category": "dry products",
-	"price": 1,
-	"quantity": 20,
-	"imgUrl": "/images/beeframen.jpeg"
-     };
-    res.render('product', {products: product2})
-  })                   
+    
+    res.render('product', {products: products, length: Object.keys(products).length, posts: posts })
+  })               
 });
+
+
+
 
 router.get('/:productid', (req, res) => {
   const productId = Number(req.params.productid); // matches ':productid' above
@@ -34,5 +37,6 @@ router.get('/:productid', (req, res) => {
     }
   });
 });
+
 
 module.exports = router;
