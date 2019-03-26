@@ -8,7 +8,7 @@
 .menu {
     vertical-align: top;
     display: inline-block;
-    margin: 10px ;
+    margin: 10px;
     
 }
 .menu-item {
@@ -201,7 +201,6 @@
     .wrap {width: 500px;}
     .loadmore{width: 220px;}
    }
-   
 
    .ui-slider .ui-slider-handle {
     position: absolute;

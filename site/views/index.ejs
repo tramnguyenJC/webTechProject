@@ -1,4 +1,5 @@
 <% include partials/header %>
+<script src="javascripts/index.js"></script>
 <section id="carousel" class="carousel slide" data-ride="carousel">
 	<ol class="carousel-indicators">
 		<li data-target="#carousel" data-slide-to="0" class="active"></li>
@@ -38,8 +39,11 @@
 		<div class="row align-items-center">
 			<div class="col-lg-3 col-md-4 col-xs-12">
 				<div class="category-item">
-					Shop All
-				</div>
+					<img src="images/categories/all.png"/>
+					<div class="category-item-mask">
+	          <a class="shop-button" href="/products" role="button">Shop All</a>
+	        </div>
+        </div>
 			</div>
 			<div class="col-lg-3 col-md-4 col-xs-12 centeralign">
 				<div class="category-item">
@@ -101,18 +105,30 @@
 	</div>
 </section>
 
-<section id="opening-hours">
+<br> 
+<section id="hours">
 	<div class="container">
+		<h2 class="hours-title">Opening Hours</h2>
 		<p class="centeralign store-description"> 京华 provides a variety of Asian snacks, Chinese cooking ingredients, popular drinks, and more. We are open from <em>8 am - 6 pm </em> Monday - Saturday, closed on national holidays.</p>
+		<div class="hours-wrapper">
+			<ul class="list-unstyled hours">
+				<li>Sunday <span class="float-right">Closed</span></li>
+				<li>Monday <span class="float-right">9:00-22:00</span></li>
+				<li>Tuesday <span class="float-right">9:00-22:00</span></li>
+				<li>Wednesday <span class="float-right">9:00-22:00</span></li>
+				<li>Thursday <span class="float-right">9:00-22:00</span></li>
+				<li>Friday <span class="float-right">9:00-23:30</span></li>
+				<li>Saturday <span class="float-right">14:00-23:30</span></li>
+			</ul>
+		</div>
 	</div>
 </section>
 
 <!--==========================
 Contact Section
 ============================-->
-<section id="contact" class="section-bg wow fadeInUp">
+<section id="contact" class="section-bg">
 	<div class="container">
-		<!-- <a href="#contact" id = "contact-header"><h2>Contact Us</h2></a> -->
 		<br>	
 		<div class="row contact-info">
 			<div class="col-md-4">
