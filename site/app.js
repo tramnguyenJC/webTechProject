@@ -3,6 +3,7 @@ var createError = require('http-errors');
 var cookieParser = require('cookie-parser');
 var express = require('express');
 var http = require('http');
+// var localStrategy   = require('passport-local').Strategy;
 var logger = require('morgan');
 var path = require('path');
 var database = require('./database.js')
@@ -11,10 +12,9 @@ var contactRouter = require('./routes/contact');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
-var databaseManagerRouter = require('./routes/databaseManager');
+var adminRouter = require('./routes/admin');
 
 var app = express();
-
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,7 +37,7 @@ app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/contact', contactRouter);
-app.use('/editdatabase', databaseManagerRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -68,7 +68,7 @@ var product = {
 	"category": "noodles",
 	"price": 1.0,
 	"quantity": 20,
-	"imgUrl": "/images/beeframen.jpeg"
+	"imgUrl": "/images/noodles/beeframen.jpeg"
 };
 var product2 = {
 	"id": 2,
@@ -76,7 +76,7 @@ var product2 = {
 	"category": "drinks",
 	"price": 3.0,
 	"quantity": 20,
-	"imgUrl": "/images/drinksProducts/Yakult_Probiotic_Drink_80mlx5.jpg"
+	"imgUrl": "/images/drinks/Yakult_Probiotic_Drink_80mlx5.jpg"
 };
 var product3 = {
 	"id": 3,
@@ -84,7 +84,7 @@ var product3 = {
 	"category": "snacks",
 	"price": 4.0,
 	"quantity": 20,
-	"imgUrl": "/images/snacksProducts/chocopie.jpeg"
+	"imgUrl": "/images/snacks/chocopie.jpeg"
 };
 //database.createDatabase();
 //database.insertProduct(product);
