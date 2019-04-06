@@ -2,67 +2,66 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="javascripts/products.js"></script>
-
+<section id="products-display">
 <div class="wrap">
-    <div class="menu">
-        <div class="mini-menu">
-            
-            <ul>
+  <div class="menu">
+    <div class="mini-menu">
+      <ul>
         <div class="header-item" >Category</div>
-                
-        <li class="sub">
-            <a href="#">Frozen</a>
-            <ul>
-               <li><a href="#">Dumplings</a></li>
-               <li><a href="#">Fish-balls</a></li>
-               <li><a href="#">Buns</a></li>
-            </ul>
-        </li>
-        <li class="sub">
-            <a href="#">Dried</a>
-            <ul>
-               <li><a href="#">Hotpot</a></li>
-               <li><a href="#">Snacks</a></li>
-            </ul>
-        </li>
-        
-        <li class="sub">
-            <a href="#">Ramen</a>
-            <ul>
-            <li><a href="#">Korean</a></li>
-               <li><a href="#">康师傅</a></li>
-            </ul>
-        </li>
-    </ul>
-        </div>
-        <div class="menu-price menu-item">
-            <div class="header-item" >Price</div>
-            <p>
-                <!--<label for="amount">Price range:</label>-->
-                <input type="text" readonly id="amount"  style="border:0; color:#f6931f; font-weight:bold;">
-            </p>
-            <div id="slider-range"></div>
-        </div>
-        
-    </div>
-    
-    <div class="items">
-        
-  <div class="items">
-      <% products.forEach(function(products){ %>
-      <div data-price=<%= products["price"]%>  class="item">
-          <img src=<%= products["imgUrl"]%>  alt=<%=products["category"]%> class="img-item"></img>
-          <div class="info">
-              <h5><%= products["name"]%></h5>
-              <h3><%= products["price"]%> DKK</h3>
-          </div>
-      </div>
-      <% }) %>
 
+        <li class="sub">
+          <a href="#">Frozen</a>
+          <ul>
+           <li><a href="#">Dumplings</a></li>
+           <li><a href="#">Fish-balls</a></li>
+           <li><a href="#">Buns</a></li>
+         </ul>
+       </li>
+       <li class="sub">
+        <a href="#">Dried</a>
+        <ul>
+         <li><a href="#">Hotpot</a></li>
+         <li><a href="#">Snacks</a></li>
+       </ul>
+     </li>
+
+     <li class="sub">
+      <a href="#">Ramen</a>
+      <ul>
+        <li><a href="#">Korean</a></li>
+        <li><a href="#">康师傅</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<div class="menu-price menu-item">
+  <div class="header-item" >Price</div>
+  <p>
+    <!--<label for="amount">Price range:</label>-->
+    <input type="text" readonly id="amount"  style="border:0; color:#f6931f; font-weight:bold;">
+  </p>
+  <div id="slider-range"></div>
+</div>
+
+</div>
+
+<div class="items">
+
+  <div class="items">
+    <% products.forEach(function(products){ %>
+    <div data-price=<%= products["price"]%>  class="item">
+      <img src=<%= products["imgUrl"]%>  alt=<%=products["category"]%> class="img-item"></img>
+      <div class="info">
+        <h5><%= products["name"]%></h5>
+        <h3><%= products["price"]%> DKK</h3>
+      </div>
     </div>
- <button class="loadmore">Load More</button>
-    </div>
+    <% }) %>
+
+  </div>
+  <button class="loadmore">Load More</button>
+</div>
 </div>
 
 <% include partials/footer %>
-
+</section>

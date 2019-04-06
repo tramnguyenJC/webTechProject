@@ -20,8 +20,8 @@ $( function() {
   $( "#slider-range" ).slider({
     range: true,
     min: 0,
-    max: 1000,
-    values: [ 190, 728 ],
+    max: 40,
+    values: [ 0, 10 ],
     slide: function( event, ui ) {
       $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
       var mi = ui.values[0];

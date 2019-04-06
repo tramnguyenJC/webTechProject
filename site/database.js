@@ -5,16 +5,16 @@ const db = new sqlite3.Database('data.db');
 // Create the database.
 exports.createDatabase = function() {
   db.serialize(() => {
-  // create a new database table:
-  db.run("CREATE TABLE IF NOT EXISTS Products (" +
-    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-    "name VARCHAR(255) NOT NULL, " +
-    "category VARCHAR(255), " +
-    "price DOUBLE(10, 2), " +
-    "quantity INT, " +
-    "imgUrl TEXT)");
+    // create a new database table:
+    db.run("CREATE TABLE IF NOT EXISTS Products (" +
+      "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+      "name VARCHAR(255) NOT NULL, " +
+      "category VARCHAR(255), " +
+      "price DOUBLE(10, 2), " +
+      "quantity INT, " +
+      "imgUrl TEXT)");
 
-  console.log('successfully created the Products table in data.db');
+    console.log('successfully created the Products table in data.db');
   });
 }
 
@@ -25,12 +25,16 @@ exports.createDatabase = function() {
 // @param product: dict object that contains information about the product.
 exports.insertProduct = function(product) {
   db.serialize(() => {
-    var command = "INSERT INTO Products (id, name, category, price, quantity," +
-      "imgUrl) VALUES (";
-    command = command + product["id"] + ",\'" + product["name"] + "\'"  +
-              ",\'" + product["category"] + "\'," + product["price"] + "," +
-              product["quantity"] + ",\'" + product["imgUrl"] + "\')";
-    db.run(command);
+    var command = "INSERT INTO Products (id, name, category, price, quantity, imgUrl) ";
+    command += "VALUES (?, ?, ?, ?, ?, ?) ";
+    db.run(command, [product["id"], product["name"], product["category"],
+      product["price"], product["quantity"], product["imgUrl"]], function(error) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Added Product of id " + product["id"], " and name " + product["name"]);
+        }
+    });
   });
 }
 
@@ -38,13 +42,16 @@ exports.insertProduct = function(product) {
 // @param productId: given productId
 // @param callback: matching product to be returned
 exports.getProductById = function(productId, callback) {
+  var command = 'SELECT * FROM Products WHERE id = ? ';
+
   db.serialize(() => {
     // db.all() fetches all results from an SQL query into the 'rows' variable:
     db.all(
-      'SELECT * FROM Products WHERE id=$id',
-      {
-        $id: Number(productId)  
-      },
+      // 'SELECT * FROM Products WHERE id=$id',
+      // {
+      //   $id: Number(productId)  
+      // },
+      command, [Number(productId)],
       // callback function to run when the query finishes:
       (err, rows) => {
         if (rows.length != 0) {

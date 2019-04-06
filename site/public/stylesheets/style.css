@@ -2,6 +2,10 @@
 ********************************************************************************
 General Styling
 */
+* {
+margin:0;
+padding:0;
+}
 
 body {
   padding-top: ;
@@ -50,7 +54,7 @@ header {
 
 .navbar {
 	background-image: none;
-	background-color: #F5F9FA !important;
+	background-color: white !important;
 }
 
 .navbar-scrolled button,

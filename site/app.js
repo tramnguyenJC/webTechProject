@@ -11,6 +11,7 @@ var contactRouter = require('./routes/contact');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
+var databaseManagerRouter = require('./routes/databaseManager');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/contact', contactRouter);
+app.use('/editdatabase', databaseManagerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -62,21 +64,30 @@ http.createServer(app).listen(app.get('port'),
 // to add products on the website, get rid of this.
 var product = {
 	"id": 1,
-	"name": "beef ramen",
-	"category": "dry products",
-	"price": 1,
+	"name": "Nissin Top Ramen Beef Flavor",
+	"category": "noodles",
+	"price": 1.0,
 	"quantity": 20,
 	"imgUrl": "/images/beeframen.jpeg"
 };
 var product2 = {
 	"id": 2,
-	"name": "beef ramen2",
-	"category": "dry products",
-	"price": 1,
+	"name": "Yakult Probiotic Drink 80mlx5",
+	"category": "drinks",
+	"price": 3.0,
 	"quantity": 20,
-	"imgUrl": "/images/beeframen.jpeg"
+	"imgUrl": "/images/drinksProducts/Yakult_Probiotic_Drink_80mlx5.jpg"
 };
-// database.createDatabase();
-// database.insertProduct(product);
-// database.insertProduct(product2);
+var product3 = {
+	"id": 3,
+	"name": "Chocopie Box of 12",
+	"category": "snacks",
+	"price": 4.0,
+	"quantity": 20,
+	"imgUrl": "/images/snacksProducts/chocopie.jpeg"
+};
+//database.createDatabase();
+//database.insertProduct(product);
+//database.insertProduct(product2);
+//database.insertProduct(product3);
 module.exports = app;
