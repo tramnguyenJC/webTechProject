@@ -55,7 +55,7 @@ router.get('/edit/:productid', function(req, res, next) {
     // If the retrieved product is not null (the product Id exists).
     console.log(product);
     if (product) {
-      res.render('editform', {product: product, categories: categories})
+      res.render('editproduct', {product: product, categories: categories})
     } else {
       res.send("No product with id " + productId + " exists.");
     }
