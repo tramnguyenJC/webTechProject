@@ -13,10 +13,36 @@ exports.createDatabase = function() {
       "price DOUBLE(10, 2), " +
       "quantity INT, " +
       "imgUrl TEXT)");
+    
+    // Create Users table
+    db.run("CREATE TABLE IF NOT EXISTS Users (" +
+      "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+      "username VARCHAR(255) NOT NULL, " +
+      "password VARCHAR(255) NOT NULL)");
 
-    console.log('successfully created the Products table in data.db');
+    console.log('successfully created the Products table and in data.db');
   });
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// USSERS METHODS
+
+// Insert user into the database
+// @param user: dict object that contains information about the user.
+exports.insertUser = function(user) {
+  db.serialize(() => {
+    var command = "INSERT INTO Users (username, password) ";
+    command += "VALUES (?, ?) ";
+    db.run(command, [user["username"], user["password"]], function(error) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Added Product of id " + user["username"], " and name " + user["password"]);
+        }
+    });
+  });
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // PRODUCTS METHODS
