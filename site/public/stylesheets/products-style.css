@@ -75,37 +75,9 @@
    
 }
 
-.mini-menu .sub > ul {
-    height: 0;
-    overflow: hidden;
-    background: #848C8F;
-}
-.mini-menu .sub > ul > li > a {
-    font-family:  sans-serif;
-    color:#FEFEFE;
-    font-size: 12px;
-    display: block;
-    text-decoration: none;
-    padding: .7em 1em;
-    text-transform: capitalize;
-    font-style: normal; 
-    letter-spacing: 1px;
-}
-/*.mini-menu .sub > ul > li > a:hover,*/
-.mini-menu .sub > a.active,
- {
-    padding-left: 1.3em;
-    color: blue;
-    content: "1";
-    float: right;
-    margin-right:6px;
-    line-height: 12px;
-}
-.mini-menu .sub >  a:after{
-    content: "»";
-    float: right;
-    margin-right:6px;
-    line-height: 12px;
+.mini-menu > ul > li > a:hover,
+.mini-menu > ul > li > a.active {
+    background-color: #f9e6c5;
 }
 
 @media screen and (max-width: 940px) {

@@ -10,28 +10,14 @@
         <div class="mini-menu">
           <ul>
             <div class="header-item">Category</div>
-            <li class="sub">
-              <a href="#">Frozen</a>
-              <ul>
-               <li><a href="#">Dumplings</a></li>
-               <li><a href="#">Fish-balls</a></li>
-               <li><a href="#">Buns</a></li>
-              </ul>
-            </li>
-            <li class="sub">
-              <a href="#">Dried</a>
-              <ul>
-                <li><a href="#">Hotpot</a></li>
-                <li><a href="#">Snacks</a></li>
-              </ul>
-            </li>
-            <li class="sub">
-              <a href="#">Ramen</a>
-              <ul>
-                <li><a href="#">Korean</a></li>
-                <li><a href="#">康师傅</a></li>
-              </ul>
-            </li>
+            <li>
+                <a href="/products">All products</a>
+              </li>
+            <% categories.forEach(function(category){ %>
+              <li>
+                <a href="/products/category/<%=category%>"><%=category%></a>
+              </li>
+            <% }) %>
           </ul>
           <div class="header-item">Price</div>
           <div class="container">
@@ -45,15 +31,15 @@
       <div class="col-9">
         <div class="container">
           <div class="row">
-              <% products.forEach(function(products){ %>
+              <% products.forEach(function(product){ %>
                 <div class="col-md-4 col-sm-6">
-                  <div class="product-grid6" data-price=<%=products["price"]%>>
+                  <div class="product-grid6" data-price=<%=product["price"]%>>
                     <div class="product-image6">
-                      <img src=<%= products["imgUrl"]%>  alt=<%=products["name"]%>></img>
+                      <img src=<%= product["imgUrl"]%>  alt=<%=product["name"]%>></img>
                     </div>
                     <div class="product-content">
-                      <h5 class="title"><%= products["name"]%></h5>
-                      <div class="price"><%= products["price"]%> DKK </div>
+                      <h5 class="title"><%= product["name"]%></h5>
+                      <div class="price"><%= product["price"]%> DKK </div>
                     </div>
                     <ul class="social"><!-- 
                       <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li> -->

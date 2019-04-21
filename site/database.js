@@ -78,7 +78,6 @@ exports.getProductById = function(productId, callback) {
 // @param callback: matching product to be returned
 exports.getProductsByCategory = function(category, callback) {
   var command = 'SELECT * FROM Products WHERE category = ? ';
-
   db.serialize(() => {
     // db.all() fetches all results from an SQL query into the 'rows' variable:
     db.all(
@@ -86,7 +85,7 @@ exports.getProductsByCategory = function(category, callback) {
       // callback function to run when the query finishes:
       (err, rows) => {
         if (rows.length != 0) {
-          callback(rows[0]);
+          callback(rows);
         } else {
           callback(null);
         }

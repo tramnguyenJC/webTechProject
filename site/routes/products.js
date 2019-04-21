@@ -9,7 +9,8 @@ var storage = multer.diskStorage({
     cb(null, './public/images/' + req.body.category + "/")
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)
+    var fileName = req.body.name + "_" + file.originalname;
+    cb(null, fileName.replace(/ /g, "_"))
   }
 })
 var upload = multer({ storage: storage })
@@ -18,7 +19,7 @@ var categories = ['drinks', 'noodles', 'frozen', 'health', 'snacks', 'spices', '
 
 router.get('/', function(req, res, next) {    
   database.getAllProducts(function(products){  
-    res.render('products', {products: products, length: Object.keys(products).length})
+    res.render('products', {products: products, categories : categories})
   })               
 });
 
@@ -42,9 +43,21 @@ router.get('/:productid', (req, res) => {
   database.getProductById(productId, function(product) {
     // If the retrieved product is not null (the product Id exists).
     if (product) {
-      res.render('products', {product: product})
+      res.render('products', {product: product, categories: categories})
     } else {
       res.send("No product with id " + productId + " exists.");
+    }
+  });
+});
+
+router.get('/category/:category', (req, res) => {
+  console.log("INside");
+  database.getProductsByCategory(req.params.category, function(products) {
+    // If the retrieved product is not null (the product Id exists).
+    if (products) {
+      res.render('products', {products: products, categories: categories})
+    } else {
+      res.send("No products of category " + req.params.category + " exists.");
     }
   });
 });
@@ -69,7 +82,8 @@ router.post('/edit/:productid', upload.single('image'), function(req, res, next)
     if (product) {
       var imageURL = product['imgUrl'];
       if (req.file) {
-        imageURL =  "/images/" + product['category'] + "/" + req.file.originalname;
+        var fileName = req.body.name + "_" + req.file.originalname;
+        imageURL =  "/images/" + product['category'] + "/" + fileName.replace(/ /g, "_");
       }
       database.editProductById(productId, req.body.name, req.body.category, 
         req.body.price, req.body.quantity, imageURL);
