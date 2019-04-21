@@ -20,22 +20,22 @@ $( function() {
   $( "#slider-range" ).slider({
     range: true,
     min: 0,
-    max: 40,
+    max: 20,
     values: [ 0, 10 ],
     slide: function( event, ui ) {
-      $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+      $( "#amount" ).val( "DKK " + ui.values[ 0 ] + " - DKK " + ui.values[ 1 ] );
       var mi = ui.values[0];
       var mx = ui.values[1];
       filterSystem(mi, mx);
     }
   });
-  $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-    " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+  $( "#amount" ).val( " DKK " + $( "#slider-range" ).slider( "values", 0 ) +
+    " - DKK " + $( "#slider-range" ).slider( "values", 1 ) );
 } );
 
 
 function filterSystem(minPrice, maxPrice) {
-  $(".items div.item").hide().filter(function () {
+  $(".products div.product-item").hide().filter(function () {
     var price = parseInt($(this).data("price"), 10);
     return price >= minPrice && price <= maxPrice;
   }).show();

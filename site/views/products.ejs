@@ -11,15 +11,23 @@
           <ul>
             <div class="header-item">Category</div>
             <li>
+              <% if (selectedCategory.localeCompare('all') == 0) { %>
+                <a href="/products" class="active">All products</a>
+              <% } else { %>  
                 <a href="/products">All products</a>
-              </li>
+              <% } %> 
+            </li>
             <% categories.forEach(function(category){ %>
               <li>
-                <a href="/products/category/<%=category%>"><%=category%></a>
+                <% if (selectedCategory.localeCompare(category) == 0) { %>
+                  <a href="/products/category/<%=category%>" class="active"><%=category%></a>
+                <% } else { %>  
+                  <a href="/products/category/<%=category%>"><%=category%></a>
+                <% } %>
               </li>
             <% }) %>
           </ul>
-          <div class="header-item">Price</div>
+          <div class="header-item">Price Range</div>
           <div class="container">
             <p>
               <input type="text" readonly id="amount">
@@ -30,11 +38,26 @@
       </div> <!-- end of <div class="col-3"> -->
       <div class="col-9">
         <div class="container">
-          <div class="row">
+          <div class="preference">
+            <div class="btn-group float-right">
+              <button type="button" class="btn btn-warning">Sort By </button>
+              <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/products/category/<%=selectedCategory%>/sortby/alphabetical">Alphabetical</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/products/category/<%=selectedCategory%>/sortby/price">Price</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/products/category/<%=selectedCategory%>/sortby/quantity">Quantity</a>
+              </div>
+            </div>
+          </div> <!-- end of  <div class="preference"> -->
+          <div class="row products">
               <% products.forEach(function(product){ %>
                 <div class="col-md-4 col-sm-6">
-                  <div class="product-grid6" data-price=<%=product["price"]%>>
-                    <div class="product-image6">
+                  <div class="product-item" data-price=<%=product["price"]%>>
+                    <div class="product-image">
                       <img src=<%= product["imgUrl"]%>  alt=<%=product["name"]%>></img>
                     </div>
                     <div class="product-content">
@@ -45,12 +68,13 @@
                       <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li> -->
                       <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
                     </ul>
-                  </div> <!-- end of  <div class="product-grid6"> -->
+                  </div> <!-- end of  <div class="product-item"> -->
                 </div> <!-- end of  <div class="col-md-3 col-sm-6"> -->
               <% }) %>
+            </div>
           </div> <!--  end of <div class="row"> -->
+          <button class="loadmore">Load More</button>
         </div> <!--  end of <div class="container"> -->
-        <button class="loadmore">Load More</button>
       </div> <!-- end of <div class="col-9"> -->
     </div> <!-- end of <div class="row"> -->
   </div>
