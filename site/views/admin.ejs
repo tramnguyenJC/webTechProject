@@ -1,0 +1,41 @@
+<% include partials/header %>
+<script src="javascripts/admin.js"></script>
+<section id="all-products-admin" class="container">
+	<button type="button"  onclick="window.location.href='/products/add'" class="btn btn-primary">Add new product</button>
+	<table class="table table-bordered table-hover">
+	  <thead class="thead-dark">
+	    <tr>
+	      <th scope="col">id</th>
+	      <th scope="col">Name</th>
+	      <th scope="col">Category</th>
+	      <th scope="col">Price</th>
+	      <th scope="col">Quantity</th>
+	      <th scope="col">Image</th>
+	      <th scope="col">Actions</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	<% products.forEach(function(product) { %>
+	       	<tr>
+		      <th scope="row"><%=product["id"]%></th>
+		      <td><%= product["name"] %>%></td>
+		      <td><%= product["category"] %></td>
+		      <td><%= product["price"] %></td>
+		      <td><%= product["quantity"] %></td>
+		      <td><a href="<%= product["imgUrl"]%>" target="_blank">Link</a></td>
+		      <td> 
+		      	<div class="product-icons">
+		      		<a href="products/edit/<%=product["id"]%>"><i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit Product"></i></a>
+		      	 	<a href="products/delete/<%=product["id"]%>"><i class="fas fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Delete Product"></i></a>
+							<a href="products/increase/<%=product["id"]%>"><i class="fas fa-plus" data-toggle="tooltip" data-placement="top" title="Increase Quantity"></i></a>
+							<a href="products/decrease/<%=product["id"]%>"><i class="fas fa-minus" data-toggle="tooltip" data-placement="top" title="Decrease Quantity"></i></a>
+		      	 	
+		      	</div>
+		      </td>
+		    </tr>
+		<% }); %>
+	  </tbody>
+	</table>
+</section>
+
+<% include partials/footer %>

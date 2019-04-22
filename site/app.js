@@ -6,52 +6,35 @@ var http = require('http');
 var logger = require('morgan');
 var path = require('path');
 var database = require('./database.js')
-var session = require("express-session")
-
 var contactRouter = require('./routes/contact');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
-var databaseManagerRouter = require('./routes/databaseManager');
+var adminRouter = require('./routes/admin');
 var loginRouter = require('./routes/login');
+var bodyParser = require('body-parser');         
+var flash = require('connect-flash');
+//var databaseManagerRouter = require('./routes/databaseManager');
+
+// User authentication dependencies
+var session = require('express-session')
+var authentication = require('./authentication');
+
+var passport = require('passport');
+var bcrypt = require('bcrypt')
+
+authentication(passport);
 
 var app = express();
 
-
 // User Authentication
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
-
 app.use(express.static("public"));
 app.use(session({ secret: "cats" }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash()); //might need be used anyways
 
-// User authentication
-app.post('/login',
-  passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login',
-                                   failureFlash: "Invalid username or password" })
-);
-
-
-
-const bodyParser = require('body-parser');
+// For POST Methods
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -72,8 +55,31 @@ app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/contact', contactRouter);
-app.use('/editdatabase', databaseManagerRouter);
+
+
+//app.post('/login', function(req, res){
+//  var username = req.body.username;
+//  
+//  console.log("heg");
+//  console.log(req.body.username); 
+//  res.send("hjej");
+//});
+
+app.get('/loginl', function(req, res, next) {
+    //console.log("loginl");
+    res.render('loginl', {message: req.flash('error')});
+});
+
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/admin',
+    failureRedirect: '/login',
+    failureFlash: true
+}));
+
+//app.use('/editdatabase', databaseManagerRouter);
 app.use('/login', loginRouter)
+
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -104,7 +110,7 @@ var product = {
 	"category": "noodles",
 	"price": 1.0,
 	"quantity": 20,
-	"imgUrl": "/images/beeframen.jpeg"
+	"imgUrl": "/images/noodles/beeframen.jpeg"
 };
 var product2 = {
 	"id": 2,
@@ -112,7 +118,7 @@ var product2 = {
 	"category": "drinks",
 	"price": 3.0,
 	"quantity": 20,
-	"imgUrl": "/images/drinksProducts/Yakult_Probiotic_Drink_80mlx5.jpg"
+	"imgUrl": "/images/drinks/Yakult_Probiotic_Drink_80mlx5.jpg"
 };
 var product3 = {
 	"id": 3,
@@ -120,17 +126,33 @@ var product3 = {
 	"category": "snacks",
 	"price": 4.0,
 	"quantity": 20,
-	"imgUrl": "/images/snacksProducts/chocopie.jpeg"
+	"imgUrl": "/images/snacks/chocopie.jpeg"
 };
 
 var user1 = {
 	"username": "ds",
 	"password": "Chocopie",
 };
+
 database.createDatabase();
 
-database.insertUser(user1);
-//database.insertProduct(product);
+
+
+//app.get('/example', function(req, res, next){
+//  var d =  database.
+//  res.send()
+//});
+//database.insertUser(user1);
+database.insertProduct(product);
 //database.insertProduct(product2);
 //database.insertProduct(product3);
-module.exports = app;
+
+//database.db.all('SELECT * FROM Users', [], (err, rows) => {
+//  if (err) {
+//    throw err;
+//  }
+//  rows.forEach((row) => {
+//    console.log(row.username);
+//    console.log(row.password); 
+//  }); 
+//});

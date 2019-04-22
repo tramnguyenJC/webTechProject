@@ -2,6 +2,8 @@
 const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('data.db');
 
+exports.db = db;
+
 // Create the database.
 exports.createDatabase = function() {
   db.serialize(() => {
@@ -17,7 +19,7 @@ exports.createDatabase = function() {
     // Create Users table
     db.run("CREATE TABLE IF NOT EXISTS Users (" +
       "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-      "username VARCHAR(255) NOT NULL, " +
+      "username VARCHAR(255) NOT NULL UNIQUE, " +
       "password VARCHAR(255) NOT NULL)");
 
     console.log('successfully created the Products table and in data.db');
@@ -37,9 +39,28 @@ exports.insertUser = function(user) {
         if (error) {
           console.log(error);
         } else {
-          console.log("Added Product of id " + user["username"], " and name " + user["password"]);
+          console.log("Added Product of id " + user["username"], "name " + user["id"], "and password " + user["password"]);
         }
     });
+  });
+}
+
+exports.findUser = function(username, callback) {
+  var command = 'SELECT * FROM Users WHERE username = ?';
+
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    db.all(
+      command, [ username ],
+      // callback function to run when the query finishes:
+      (err, rows) => {
+        if (rows.length != 0) {
+          callback(rows[0]);
+        } else {
+          callback(null);
+        }
+      }
+    );
   });
 }
 
@@ -64,6 +85,19 @@ exports.insertProduct = function(product) {
   });
 }
 
+exports.addProduct = function(name, category, price, quantity, imageURL) {
+  var command = "INSERT INTO Products (name, category, price, quantity, imgUrl) ";
+  command += "VALUES (?, ?, ?, ?, ?) ";
+  db.run(command, [name, category, price, quantity, imageURL], function(error) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Added Product of name " + name);
+    }
+  });
+}
+
+
 // Retrieve product in database by product id
 // @param productId: given productId
 // @param callback: matching product to be returned
@@ -73,10 +107,6 @@ exports.getProductById = function(productId, callback) {
   db.serialize(() => {
     // db.all() fetches all results from an SQL query into the 'rows' variable:
     db.all(
-      // 'SELECT * FROM Products WHERE id=$id',
-      // {
-      //   $id: Number(productId)  
-      // },
       command, [Number(productId)],
       // callback function to run when the query finishes:
       (err, rows) => {
@@ -102,6 +132,82 @@ exports.getAllProducts = function(callback) {
           callback(rows);
         } else {
           callback(null);
+        }
+      }
+    );
+  });
+}
+
+exports.editProductById = function(productId, name, category, price, quantity, imageURL) {
+  var command = 'UPDATE Products SET name = ?, category = ?, price = ?, quantity = ?, imgUrl = ? where id = ? ';
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    console.log(command);
+    db.run(
+      command, [name, category, Number(price), Number(quantity), imageURL, Number(productId)],
+      // callback function to run when the query finishes:
+      function(error) { 
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Updated Product of id " + productId + ".");
+        }
+      }
+    );
+  });
+}
+
+exports.deleteProductById = function(productId) {
+  var command = 'DELETE from Products where id = ? ';
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    console.log(command);
+    db.run(
+      command, Number(productId),
+      // callback function to run when the query finishes:
+      function(error) { 
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Deleted Product of id " + productId + ".");
+        }
+      }
+    );
+  });
+}
+
+exports.decreaseQuantityById = function(productId) {
+   var command = 'UPDATE Products SET quantity = quantity - 1 WHERE id = ? '
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    console.log(command);
+    db.run(
+      command, Number(productId),
+      // callback function to run when the query finishes:
+      function(error) { 
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Deleted Product of id " + productId + ".");
+        }
+      }
+    );
+  });
+}
+
+exports.increaseQuantityById = function(productId) {
+   var command = 'UPDATE Products SET quantity = quantity + 1 WHERE id = ? '
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    console.log(command);
+    db.run(
+      command, Number(productId),
+      // callback function to run when the query finishes:
+      function(error) { 
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Deleted Product of id " + productId + ".");
         }
       }
     );

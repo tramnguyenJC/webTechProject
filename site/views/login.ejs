@@ -1,16 +1,39 @@
+
+
 <% include partials/header %>
+
+<!-- Modal Section -->
+	<div class="bg-modal" style="display:none;">
+		<div class="modal-contents">
+			<div class="close">+</div>
+			<form action="/login" method="post"> 
+				<input type="text" name="username" placeholder="Username">
+				<input type="password" name="password" placeholder="Password">
+				<a href="#" class="button">Login</a>
+			</form>
+		</div>
+	</div> 
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="javascripts/login.js"></script>
+<!-- <%= message %>
 <form action="/login" method="post"> 
     <div>
         <label>Username:</label>
-        <input type="text" name="username"/>
+        <input type="text" name="username" id="username"/>
     </div>
     <div>
         <label>Password:</label>
-        <input type="password" name="password"/>
+        <input type="password" name="password" id="password"/>
     </div>
     <div>
         <input type="submit" value="Log In"/>
     </div>
 </form>
 
-<% include partials/footer %>
+
+<% include partials/footer %> -->
+
+

@@ -24,7 +24,8 @@ lang="en-GB" xml:lang="en-GB">
   <!-- Stylesheet include  -->
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='stylesheet' href='/stylesheets/products-style.css'/>
-
+  <link rel='stylesheet' href='/stylesheets/admin-style.css'/>
+  <link rel='stylesheet' href='/stylesheets/login-style.css'/>
 </head>
 <body>
 	<header id="header">
@@ -47,15 +48,67 @@ lang="en-GB" xml:lang="en-GB">
 						<li class="nav-item active">
 							<a class="nav-link" href="/index#contact">Contact</a>
 						</li>
+						<!-- @TODO: Later change this to be only visible to admin. -->
+						<li class="nav-item active">
+							<a class="nav-link" href="/admin">Admin</a>
+						</li>
 					</ul>
+  
 					<form class="form-inline my-2 my-lg-0">
 						<input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="Product Name" aria-label="Search">
 						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 					</form>
+                  
+
+                    <div class="hero-content">
+                        <a href="#" id="button" class="button">Login</a>
+                    </div>
 				</div>
 			</div>
 		</nav>
 	</header> <!-- #header -->
 
-	<main>
 
+	<main>
+	
+
+ 
+					<!-- inline CSS is not good practice (Login form)-->
+					<div class="bg-modal" style="display:none;">
+						
+									
+							
+							<div class="modal-contents">
+									<div>
+											<h1>Admin Login</h1>
+									</div>
+								<div class="close">+</div>
+								<form action="/login" method="post"> 
+									<input type="text" name="username" placeholder="Username">
+									<input type="password" name="password" placeholder="Password">
+									<!-- <a href="#" class="button">Login</a> -->
+									<div>
+											<input type="submit" value="Log In"/>
+									</div>
+								</form>
+							</div>
+						</div> 
+					
+					
+					<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+					<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+					<script src="javascripts/login.js"></script>
+
+<!-- <form action="/login" method="post"> 
+	<div>
+			<label>Username:</label>
+			<input type="text" name="username" id="username"/>
+	</div>
+	<div>
+			<label>Password:</label>
+			<input type="password" name="password" id="password"/>
+	</div>
+	<div>
+			<input type="submit" value="Log In"/>
+	</div>
+</form> -->

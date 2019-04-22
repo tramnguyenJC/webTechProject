@@ -294,3 +294,19 @@ Opening hours Styling
 .hours li:last-child {
 border-bottom: none; 
 }
+
+
+
+/*******************************************************************************
+********************************************************************************
+Product Edit form Styling
+*/
+
+#editform {
+	text-align: center;
+}
+
+#editform form {
+    display: inline-block;
+    text-align: left;
+}
