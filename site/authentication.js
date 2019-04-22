@@ -7,7 +7,7 @@ var database = require('./database.js');
 
 // Used to restrict acess to the admin page.
 module.exports = function(req, res, next) {
-
+  console.log("in her");
   if (req.isAuthenticated()) {
       next();
   } else {
@@ -44,14 +44,22 @@ module.exports = function(passport) {
     // =========================================================================
     // we are using named strategies since we have one for login and one for signup
     // by default, if there was no name, it would just be called 'local'
+
     passport.use(new LocalStrategy(function(username, password, done) {
+        
+
         database.db.get('SELECT * FROM Users WHERE username = ?', username, function(err, row) {
-            if (err)
+          console.log(row);
+            if (err){
+              console.log("query failed");
               return done(err);
+            }
           
             // No user found
-            if (!row)
+            if (!row){
+              console.log("1");
               return done(null, false, "Invalid username or password");
+            }
           
             // User is found but the password is wrong
             if (!(row.password == password))

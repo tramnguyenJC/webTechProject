@@ -14,7 +14,6 @@ var adminRouter = require('./routes/admin');
 var loginRouter = require('./routes/login');
 var bodyParser = require('body-parser');         
 var flash = require('connect-flash');
-//var databaseManagerRouter = require('./routes/databaseManager');
 
 // User authentication dependencies
 var session = require('express-session')
@@ -27,12 +26,15 @@ authentication(passport);
 
 var app = express();
 
+
 // User Authentication
 app.use(express.static("public"));
 app.use(session({ secret: "cats" }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash()); //might need be used anyways
+
+app.use('/admin', authentication)
 
 // For POST Methods
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -57,18 +59,10 @@ app.use('/products', productsRouter);
 app.use('/contact', contactRouter);
 
 
-//app.post('/login', function(req, res){
-//  var username = req.body.username;
-//  
-//  console.log("heg");
-//  console.log(req.body.username); 
-//  res.send("hjej");
-//});
-
-app.get('/loginl', function(req, res, next) {
-    //console.log("loginl");
-    res.render('loginl', {message: req.flash('error')});
-});
+// app.get('/loginl', function(req, res, next) {
+//     //console.log("loginl");
+//     res.render('loginl', {message: req.flash('error')});
+// });
 
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/admin',
@@ -130,8 +124,8 @@ var product3 = {
 };
 
 var user1 = {
-	"username": "ds",
-	"password": "Chocopie",
+	"username": "sd",
+	"password": "ds",
 };
 
 database.createDatabase();
@@ -143,7 +137,7 @@ database.createDatabase();
 //  res.send()
 //});
 //database.insertUser(user1);
-database.insertProduct(product);
+//database.insertProduct(product);
 //database.insertProduct(product2);
 //database.insertProduct(product3);
 

@@ -58,57 +58,39 @@ lang="en-GB" xml:lang="en-GB">
 						<input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="Product Name" aria-label="Search">
 						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 					</form>
-                  
 
-                    <div class="hero-content">
-                        <a href="#" id="button" class="button">Login</a>
-                    </div>
+					<button type="submit" class="login-button" data-toggle="modal" data-target="#myModal">Login</button>
+
 				</div>
 			</div>
 		</nav>
 	</header> <!-- #header -->
 
-
 	<main>
-	
 
- 
-					<!-- inline CSS is not good practice (Login form)-->
-					<div class="bg-modal" style="display:none;">
-						
-									
-							
-							<div class="modal-contents">
-									<div>
-											<h1>Admin Login</h1>
-									</div>
-								<div class="close">+</div>
-								<form action="/login" method="post"> 
-									<input type="text" name="username" placeholder="Username">
-									<input type="password" name="password" placeholder="Password">
-									<!-- <a href="#" class="button">Login</a> -->
-									<div>
-											<input type="submit" value="Log In"/>
-									</div>
-								</form>
-							</div>
-						</div> 
-					
-					
-					<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-					<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-					<script src="javascripts/login.js"></script>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
 
-<!-- <form action="/login" method="post"> 
-	<div>
-			<label>Username:</label>
-			<input type="text" name="username" id="username"/>
+				<div class="modal-header">
+					<button class="close" type="button" data-dismiss="modal">+</button>
+					<h3 class="modal-title">User Login</h3>
+				</div>
+				<div class="modal-body">
+				<form action="/login" method="post"> 
+					<input type="text" name="username" placeholder="Username">
+					<input type="password" name="password" placeholder="Password">
+					<button type="submit" class="btn btn-primary" >Login</button>
+				</form>
+				</div>
+				<div class="modal-footer">
+						<button class="button-signup" type="submit">OR create an account here</button>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-			<label>Password:</label>
-			<input type="password" name="password" id="password"/>
-	</div>
-	<div>
-			<input type="submit" value="Log In"/>
-	</div>
-</form> -->
+
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="javascripts/login.js"></script>
