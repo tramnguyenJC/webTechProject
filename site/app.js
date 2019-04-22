@@ -23,8 +23,10 @@ var passport = require('passport');
 var bcrypt = require('bcrypt');
 
 var app = express();
-// app.use('/admin', authentication)
+
+
 authentication(passport);
+
 // User Authentication
 app.use(express.static("public"));
 app.use(session({ secret: "cats" }));
@@ -54,21 +56,13 @@ app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/contact', contactRouter);
 
-
-
-// app.get('/loginl', function(req, res, next) {
-//     //console.log("loginl");
-//     res.render('loginl', {message: req.flash('error')});
-// });
-
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/admin',
     failureRedirect: '/',
     failureFlash: true
 }));
 
-//app.use('/editdatabase', databaseManagerRouter);
-app.use('/login', loginRouter)
+app.use('/login', loginRouter);
 
 app.get('/admin', function(req, res, next) {
 	  console.log(req.isAuthenticated());
@@ -130,29 +124,14 @@ var product3 = {
 };
 
 var user1 = {
-	"username": "sd",
-	"password": "ds",
+	"username": "adm",
+	"password": "pass",
 };
 
 database.createDatabase();
 
 
-
-//app.get('/example', function(req, res, next){
-//  var d =  database.
-//  res.send()
-//});
 //database.insertUser(user1);
 //database.insertProduct(product);
 //database.insertProduct(product2);
 //database.insertProduct(product3);
-
-//database.db.all('SELECT * FROM Users', [], (err, rows) => {
-//  if (err) {
-//    throw err;
-//  }
-//  rows.forEach((row) => {
-//    console.log(row.username);
-//    console.log(row.password); 
-//  }); 
-//});

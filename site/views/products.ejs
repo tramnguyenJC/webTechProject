@@ -1,67 +1,83 @@
+
 <% include partials/header %>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="javascripts/products.js"></script>
 <section id="products-display">
-<div class="wrap">
-  <div class="menu">
-    <div class="mini-menu">
-      <ul>
-        <div class="header-item" >Category</div>
-
-        <li class="sub">
-          <a href="#">Frozen</a>
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
+        <div class="mini-menu">
           <ul>
-           <li><a href="#">Dumplings</a></li>
-           <li><a href="#">Fish-balls</a></li>
-           <li><a href="#">Buns</a></li>
-         </ul>
-       </li>
-       <li class="sub">
-        <a href="#">Dried</a>
-        <ul>
-         <li><a href="#">Hotpot</a></li>
-         <li><a href="#">Snacks</a></li>
-       </ul>
-     </li>
-
-     <li class="sub">
-      <a href="#">Ramen</a>
-      <ul>
-        <li><a href="#">Korean</a></li>
-        <li><a href="#">康师傅</a></li>
-      </ul>
-    </li>
-  </ul>
-</div>
-<div class="menu-price menu-item">
-  <div class="header-item" >Price</div>
-  <p>
-    <!--<label for="amount">Price range:</label>-->
-    <input type="text" readonly id="amount"  style="border:0; color:#f6931f; font-weight:bold;">
-  </p>
-  <div id="slider-range"></div>
-</div>
-
-</div>
-
-<div class="items">
-
-  <div class="items">
-    <% products.forEach(function(products){ %>
-    <div data-price=<%= products["price"]%>  class="item">
-      <img src=<%= products["imgUrl"]%>  alt=<%=products["category"]%> class="img-item"></img>
-      <div class="info">
-        <h5><%= products["name"]%></h5>
-        <h3><%= products["price"]%> DKK</h3>
-      </div>
-    </div>
-    <% }) %>
-
+            <div class="header-item">Category</div>
+            <li>
+              <% if (selectedCategory.localeCompare('all') == 0) { %>
+                <a href="/products" class="active">All products</a>
+              <% } else { %>  
+                <a href="/products">All products</a>
+              <% } %> 
+            </li>
+            <% categories.forEach(function(category){ %>
+              <li>
+                <% if (selectedCategory.localeCompare(category) == 0) { %>
+                  <a href="/products/category/<%=category%>" class="active"><%=category%></a>
+                <% } else { %>  
+                  <a href="/products/category/<%=category%>"><%=category%></a>
+                <% } %>
+              </li>
+            <% }) %>
+          </ul>
+          <div class="header-item">Price Range</div>
+          <div class="container">
+            <p>
+              <input type="text" readonly id="amount">
+            </p>
+            <div id="slider-range"></div>
+          </div>
+        </div> <!-- end of <div class="mini-menu"> -->
+      </div> <!-- end of <div class="col-3"> -->
+      <div class="col-9">
+        <div class="container">
+          <div class="preference">
+            <div class="btn-group float-right">
+              <button type="button" class="btn btn-warning">Sort By </button>
+              <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/products/category/<%=selectedCategory%>/sortby/alphabetical">Alphabetical</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/products/category/<%=selectedCategory%>/sortby/price">Price</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/products/category/<%=selectedCategory%>/sortby/quantity">Quantity</a>
+              </div>
+            </div>
+          </div> <!-- end of  <div class="preference"> -->
+          <div class="row products">
+              <% products.forEach(function(product){ %>
+                <div class="col-md-4 col-sm-6">
+                  <div class="product-item" data-price=<%=product["price"]%>>
+                    <div class="product-image">
+                      <img src=<%= product["imgUrl"]%>  alt=<%=product["name"]%>></img>
+                    </div>
+                    <div class="product-content">
+                      <h5 class="title"><%= product["name"]%></h5>
+                      <div class="price"><%= product["price"]%> DKK </div>
+                    </div>
+                    <ul class="social"><!-- 
+                      <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li> -->
+                      <li><a href="" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+                    </ul>
+                  </div> <!-- end of  <div class="product-item"> -->
+                </div> <!-- end of  <div class="col-md-3 col-sm-6"> -->
+              <% }) %>
+            </div>
+          </div> <!--  end of <div class="row"> -->
+          <button class="loadmore">Load More</button>
+        </div> <!--  end of <div class="container"> -->
+      </div> <!-- end of <div class="col-9"> -->
+    </div> <!-- end of <div class="row"> -->
   </div>
-  <button class="loadmore">Load More</button>
-</div>
-</div>
-
-<% include partials/footer %>
+<hr>
 </section>
+<% include partials/footer %>

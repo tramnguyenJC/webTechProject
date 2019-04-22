@@ -7,7 +7,7 @@ lang="en-GB" xml:lang="en-GB">
 	<title>Jinghua Shop</title>
 
 	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Quicksand|Raleway" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Quicksand|Raleway|Nunito" rel="stylesheet">
 
 	<!-- Bootstrap, Fontawesome and JQuery CDN include  -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -55,9 +55,8 @@ lang="en-GB" xml:lang="en-GB">
 							<a class="nav-link" href="/admin">Admin</a>
 						</li>
 					</ul>
-  
-					<form class="form-inline my-2 my-lg-0">
-						<input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="Product Name" aria-label="Search">
+					<form class="form-inline my-2 my-lg-0" action="/products/search" id="product-edit-form" method="post" role="form">
+						<input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="Product Name" name="name" aria-label="Search">
 						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 					</form>
 

@@ -120,6 +120,45 @@ exports.getProductById = function(productId, callback) {
   });
 }
 
+// Retrieve product in database by product id
+// @param category: given category
+// @param callback: matching product to be returned
+exports.getProductsByCategory = function(category, callback) {
+  var command = 'SELECT * FROM Products WHERE category = ? ';
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    db.all(
+      command, [category],
+      // callback function to run when the query finishes:
+      (err, rows) => {
+        if (rows.length != 0) {
+          callback(rows);
+        } else {
+          callback(null);
+        }
+      }
+    );
+  });
+}
+
+exports.getProductsByName = function(name, callback) {
+  var command = 'SELECT * FROM Products WHERE name LIKE ? ';
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    db.all(
+      command, [name],
+      // callback function to run when the query finishes:
+      (err, rows) => {
+        if (rows.length != 0) {
+          callback(rows);
+        } else {
+          callback(null);
+        }
+      }
+    );
+  });
+}
+
 // Retrieve all products in database
 exports.getAllProducts = function(callback) {
   db.serialize(() => {
