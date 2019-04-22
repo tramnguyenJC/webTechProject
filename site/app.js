@@ -20,21 +20,17 @@ var session = require('express-session')
 var authentication = require('./authentication');
 
 var passport = require('passport');
-var bcrypt = require('bcrypt')
-
-authentication(passport);
+var bcrypt = require('bcrypt');
 
 var app = express();
-
-
+// app.use('/admin', authentication)
+authentication(passport);
 // User Authentication
 app.use(express.static("public"));
 app.use(session({ secret: "cats" }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash()); //might need be used anyways
-
-app.use('/admin', authentication)
 
 // For POST Methods
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -59,6 +55,7 @@ app.use('/products', productsRouter);
 app.use('/contact', contactRouter);
 
 
+
 // app.get('/loginl', function(req, res, next) {
 //     //console.log("loginl");
 //     res.render('loginl', {message: req.flash('error')});
@@ -66,12 +63,21 @@ app.use('/contact', contactRouter);
 
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/admin',
-    failureRedirect: '/login',
+    failureRedirect: '/',
     failureFlash: true
 }));
 
 //app.use('/editdatabase', databaseManagerRouter);
 app.use('/login', loginRouter)
+
+app.get('/admin', function(req, res, next) {
+	  console.log(req.isAuthenticated());
+	  if (req.isAuthenticated()) {
+	      next();
+	  } else {
+				res.redirect('/');
+	  }
+	});
 
 app.use('/admin', adminRouter);
 

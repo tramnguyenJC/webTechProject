@@ -26,6 +26,8 @@ lang="en-GB" xml:lang="en-GB">
   <link rel='stylesheet' href='/stylesheets/products-style.css'/>
   <link rel='stylesheet' href='/stylesheets/admin-style.css'/>
   <link rel='stylesheet' href='/stylesheets/login-style.css'/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
 </head>
 <body>
 	<header id="header">
@@ -59,8 +61,16 @@ lang="en-GB" xml:lang="en-GB">
 						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 					</form>
 
-					<button type="submit" class="login-button" data-toggle="modal" data-target="#myModal">Login</button>
 
+			<div class="dropdown">
+					<button class="dropbtn"><li class="w3-large"><i class="material-icons w3-large">person</i></li></button>
+
+			  <div class="dropdown-content">
+					<a href="#"  data-toggle="modal" data-target="#modalLogin">Login</a>
+					<a href="#"  data-toggle="modal" data-target="#modalRegister">Register</a>
+			  </div>
+			  
+			</div>
 				</div>
 			</div>
 		</nav>
@@ -68,28 +78,51 @@ lang="en-GB" xml:lang="en-GB">
 
 	<main>
 
-	<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade" id="modalRegister" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
-
+				<div class="modal-header">
+					<button class="close" type="button" data-dismiss="modal">+</button>
+					<h3 class="modal-title">Account Registration</h3>
+				</div>
+				<div class="modal-body">
+					<form action="/signup" method="post"> 
+						<input type="text" name="username" placeholder="Username">
+						<input type="password" name="password" placeholder="Password">
+						<input type="password" name="password" placeholder="Confirm password">
+						<button type="submit" class="btn btn-primary" >Submit</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalLogin" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
 				<div class="modal-header">
 					<button class="close" type="button" data-dismiss="modal">+</button>
 					<h3 class="modal-title">User Login</h3>
 				</div>
 				<div class="modal-body">
-				<form action="/login" method="post"> 
-					<input type="text" name="username" placeholder="Username">
-					<input type="password" name="password" placeholder="Password">
-					<button type="submit" class="btn btn-primary" >Login</button>
-				</form>
+					<form action="/login" method="post"> 
+						<input type="text" name="username" placeholder="Username">
+						<input type="password" name="password" placeholder="Password">
+						<button type="submit" class="btn btn-primary" >Login</button>
+					</form>
 				</div>
 				<div class="modal-footer">
-						<button class="button-signup" type="submit">OR create an account here</button>
+					<button class="button-signup" type="submit" id="signup">OR create an account here</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+
+
 
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

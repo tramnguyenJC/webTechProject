@@ -1,9 +1,40 @@
 // Might be unused
-document.getElementById('button').addEventListener("click", function() {
-	document.querySelector('.bg-modal').style.display = "flex";
-});
+// document.getElementById('button-signup').addEventListener("click", function() {
+// 	console.log("hej");
+// 	$('#modalLogin').modal('hide')
+// 	$('#modalRegister').modal(show);
+// 	// document.querySelector('.bg-modal').style.display = "flex";
+// });
+
+document.getElementById('signup').onclick = function() {
+	// $('#modalLogin .close').close();
+	// jQuery.noConflict(); 
+	console.log("sd");
+	// $('#modalRegister').show();
+	$("#modalLogin").hide;
+    $("#modalLogin").on("hidden.bs.modal",function(){
+	$("#modalRegister").show();
+	});
+	
+	// $('#modalRegister').appendTo("body").modal('show');
+	// $('#modalRegister').appendTo("modal-body").modal();
+};
+
+// $("#signup").on("click", function(){
+// 	console.log("d");
+//     $("#modalLogin").hide;
+//     $("#modalLogin").on("hidden.bs.modal",function(){
+//     $("#modalRegister").show();
+//     });
+// });
+// $('#modalLogin').on('hidden.bs.modal', function () {
+// 	// Load up a new modal...
+// 	console.log("s");
+// 	$('#modalRegister').show();
+//   })
 
 document.querySelector('.close').addEventListener("click", function() {
+	console.log("dsd");
 	document.querySelector('.bg-modal').style.display = "none";
 });
 

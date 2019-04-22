@@ -32,11 +32,10 @@ li {
 
 
 .login-button {
-	background-color: $black;
-	border: 1px solid black;
 	border-radius: 30px;
 	text-decoration: none;
-	padding: 10px 28px;
+	border: 1px solid black;
+	padding: 8px 10px;
 	color: black;
 	margin-left: 25px;
 	margin-top: 0px;
@@ -73,10 +72,10 @@ li {
 
 .modal-content {
 	z-index: 99;
-    top: 40%;
+    top: 20%;
     left: 50%;
     margin: -100px 0 0 -200px;
-	height: 400px;
+	height: 390px;
 	width: 500px;
 	background-color: white;
 	text-align: center;
@@ -105,6 +104,58 @@ li {
 		border: 2px solid $blue;
 	}
 }
+.dropbtn {
+	background-color: #4CAF50;
+	color: white;
+	border-radius: 3px;
+	padding: 6px;
+	font-size: 16px;
+	margin-left:25px;
+	border: none;
+  }
+  
+  .dropdown {
+	position: relative;
+	display: inline-block;
+  }
+  
+  .dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #dadada;
+	margin-left:-5px;
+	min-width: 100px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+  }
+  
+  .dropdown-content a {
+
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}
+/* 
+.signup{
+	z-index: 99;
+    top: 62%;
+	left: 50%;
+    margin: -90px 0 0px -199px;
+	height: 200px;
+	width: 498px;
+	background-color: white;
+	text-align: center;
+	padding: 20px;
+	position: fixed;
+	border-radius: 4px;
+} */
 input[type=submit] {
     padding:5px 15px; 
     background: blue; 

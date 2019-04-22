@@ -1,19 +1,33 @@
 // load all the things we need
 var express = require('express');
+var router = express.Router();
 var LocalStrategy = require('passport-local').Strategy;
 var mysql = require('sqlite3');
 var database = require('./database.js');
 
 
 // Used to restrict acess to the admin page.
-module.exports = function(req, res, next) {
-  console.log("in her");
-  if (req.isAuthenticated()) {
-      next();
-  } else {
-      res.redirect('/login');
-  }
-};
+// console.log("hej3")
+// router.get('/', function(req, res, next) {
+//   console.log("in her");
+//   if (req.isAuthenticated()) {
+//       next();
+//   } else {
+//       res.redirect('/admin');
+//   }
+// });
+
+
+// module.exports = router
+// module.exports = function(req, res, next) {
+//   console.log("in her");
+//   if (req.isAuthenticated()) {
+//       next();
+//   } else {
+//       res.redirect('/login');
+//   }
+// };
+
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
