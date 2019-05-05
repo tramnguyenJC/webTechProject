@@ -129,13 +129,9 @@ var user1 = {
 };
 
 database.createDatabase();
-<<<<<<< HEAD
 
 //database.insertUser(user1);
 
-=======
-// database.insertUser(user1);
->>>>>>> parent of 02e2930... finished user registration and added password encryption, and shoppingcart table
 //database.insertProduct(product);
 //database.insertProduct(product2);
 //database.insertProduct(product3);

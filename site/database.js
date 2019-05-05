@@ -20,13 +20,8 @@ exports.createDatabase = function() {
     db.run("CREATE TABLE IF NOT EXISTS Users (" +
       "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
       "username VARCHAR(255) NOT NULL UNIQUE, " +
-<<<<<<< HEAD
-      "password VARCHAR(255) NOT NULL)");
-=======
       "password VARCHAR(255) NOT NULL, " +
       "isAdmin BOOLEAN)");
->>>>>>> parent of 02e2930... finished user registration and added password encryption, and shoppingcart table
-
     console.log('successfully created the Products table and in data.db');
   });
 }
