@@ -114,8 +114,8 @@ var user1 = {
 
 database.createDatabase();
 
-// database.createUser(user1["username"], user1["password"], user1["isAdmin"]);
 
+//database.insertUser(user1);
 //database.insertProduct(product);
 //database.insertProduct(product2);
 //database.insertProduct(product3);
