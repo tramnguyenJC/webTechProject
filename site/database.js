@@ -18,6 +18,8 @@ exports.createDatabase = function() {
       "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
       "username VARCHAR(255) NOT NULL UNIQUE, " +
       "password VARCHAR(255) NOT NULL)");
+
+    console.log('successfully created the Products table and in data.db');
   });
 }
 
