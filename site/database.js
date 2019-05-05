@@ -15,12 +15,12 @@ exports.createDatabase = function() {
       "price DOUBLE(10, 2), " +
       "quantity INT, " +
       "imgUrl TEXT)");
-    
     // Create Users table
     db.run("CREATE TABLE IF NOT EXISTS Users (" +
       "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
       "username VARCHAR(255) NOT NULL UNIQUE, " +
-      "password VARCHAR(255) NOT NULL)");
+      "password VARCHAR(255) NOT NULL, " +
+      "isAdmin BOOLEAN)");
 
     console.log('successfully created the Products table and in data.db');
   });

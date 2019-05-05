@@ -146,21 +146,21 @@ Coupon Popup
 }
 
 /* The Close Button */
-.close {
+.coupon-close {
   position: absolute;
   margin: 10px;
   background-color: black;
   color: white;
-  font-size: 40px;
-  padding: 12px 24px;
+  font-size: 25px;
+  padding: 0px 8px;
   border: 1px solid black;
   cursor: pointer;
   border-radius: 5px;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
+.coupon-close :hover,
+.coupon-close :focus {
+  color: grey;
   text-decoration: none;
   cursor: pointer;
 }

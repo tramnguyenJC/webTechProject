@@ -1,4 +1,5 @@
 "use strict";
+require('dotenv').config()
 var createError = require('http-errors');
 var cookieParser = require('cookie-parser');
 var express = require('express');
@@ -91,7 +92,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-http.createServer(app).listen(app.get('port'),
+http.createServer(app).listen(app.get('port'), 'localhost',
   function(){
     console.log("Express server listening on port " + app.get('port'));
 });
@@ -124,14 +125,13 @@ var product3 = {
 };
 
 var user1 = {
-	"username": "adm",
-	"password": "pass",
+	"username": process.env.ADMIN_USERNAME,
+	"password": process.env.ADMIN_PASS,
+	"isAdmin": true
 };
 
 database.createDatabase();
-
-
-//database.insertUser(user1);
+// database.insertUser(user1);
 //database.insertProduct(product);
 //database.insertProduct(product2);
 //database.insertProduct(product3);
