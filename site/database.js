@@ -1,6 +1,9 @@
 "use strict";
 const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('data.db');
+
+exports.db = db;
+
 // Create the database.
 exports.createDatabase = function() {
   db.serialize(() => {
@@ -26,31 +29,29 @@ exports.createDatabase = function() {
 ////////////////////////////////////////////////////////////////////////////////
 // USSERS METHODS
 
-// Create a new user
-exports.createUser = function(username, password, admin = false) {
-  console.log(username)
+// Insert user into the database
+// @param user: dict object that contains information about the user.
+exports.insertUser = function(user) {
   db.serialize(() => {
-    var command = "INSERT INTO Users (username, password, isAdmin) ";
-    command += "VALUES (?, ?, ?) ";
-    db.run(command, [username, password, admin], function(error) {
+    var command = "INSERT INTO Users (username, password) ";
+    command += "VALUES (?, ?) ";
+    db.run(command, [user["username"], user["password"]], function(error) {
         if (error) {
           console.log(error);
         } else {
-          console.log("Added user: " + username);
+          console.log("Added Product of id " + user["username"], "name " + user["id"], "and password " + user["password"]);
         }
     });
   });
 }
 
-// Retrieve in database by username
-// @param userName: given username
-// @param callback: matching user to be returned
-exports.getUser = function(username, callback) {
-  var command = 'SELECT * FROM users WHERE username = ?';
+exports.findUser = function(username, callback) {
+  var command = 'SELECT * FROM Users WHERE username = ?';
+
   db.serialize(() => {
     // db.all() fetches all results from an SQL query into the 'rows' variable:
     db.all(
-      command, [username],
+      command, [ username ],
       // callback function to run when the query finishes:
       (err, rows) => {
         if (rows.length != 0) {
@@ -62,6 +63,7 @@ exports.getUser = function(username, callback) {
     );
   });
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // PRODUCTS METHODS
@@ -250,4 +252,3 @@ exports.increaseQuantityById = function(productId) {
     );
   });
 }
-

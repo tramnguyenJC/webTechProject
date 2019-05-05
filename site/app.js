@@ -12,14 +12,15 @@ var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
 var adminRouter = require('./routes/admin');
 var loginRouter = require('./routes/login');
-var signUpRouter = require('./routes/signup');
 var bodyParser = require('body-parser');         
 var flash = require('connect-flash');
 
 // User authentication dependencies
 var session = require('express-session')
 var authentication = require('./authentication');
+
 var passport = require('passport');
+var bcrypt = require('bcrypt');
 
 var app = express();
 
@@ -54,8 +55,24 @@ app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/contact', contactRouter);
+
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/admin',
+    failureRedirect: '/',
+    failureFlash: true
+}));
+
 app.use('/login', loginRouter);
-app.use('/signup', signUpRouter);
+
+app.get('/admin', function(req, res, next) {
+	  console.log(req.isAuthenticated());
+	  if (req.isAuthenticated()) {
+	      next();
+	  } else {
+				res.redirect('/');
+	  }
+	});
+
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
@@ -111,11 +128,10 @@ var user1 = {
 	"password": "pass",
 };
 
-
 database.createDatabase();
 
-
 //database.insertUser(user1);
+
 //database.insertProduct(product);
 //database.insertProduct(product2);
 //database.insertProduct(product3);
