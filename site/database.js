@@ -1,9 +1,6 @@
 "use strict";
 const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('data.db');
-
-exports.db = db;
-
 // Create the database.
 exports.createDatabase = function() {
   db.serialize(() => {
@@ -17,41 +14,50 @@ exports.createDatabase = function() {
       "imgUrl TEXT)");
     // Create Users table
     db.run("CREATE TABLE IF NOT EXISTS Users (" +
-      "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-      "username VARCHAR(255) NOT NULL UNIQUE, " +
+      "username VARCHAR(255) PRIMARY KEY NOT NULL, " +
       "password VARCHAR(255) NOT NULL, " +
       "isAdmin BOOLEAN)");
 
-    console.log('successfully created the Products table and in data.db');
+    db.run("CREATE TABLE IF NOT EXISTS ShoppingCart (" +
+      "userid INTEGER NOT NULL, " +
+      "productid INTEGER NOT NULL, " +
+      "quantity INTEGER NOT NULL, " + 
+      "FOREIGN KEY(productid) REFERENCES Products(id), " +
+      "FOREIGN KEY(userid) REFERENCES Users(id), " + 
+      "PRIMARY KEY (userid, productid) )");  
+
+    console.log('successfully created the tables in data.db');
   });
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // USSERS METHODS
 
-// Insert user into the database
-// @param user: dict object that contains information about the user.
-exports.insertUser = function(user) {
+// Create a new user
+exports.createUser = function(username, password, admin = false) {
+  console.log(username)
   db.serialize(() => {
-    var command = "INSERT INTO Users (username, password) ";
-    command += "VALUES (?, ?) ";
-    db.run(command, [user["username"], user["password"]], function(error) {
+    var command = "INSERT INTO Users (username, password, isAdmin) ";
+    command += "VALUES (?, ?, ?) ";
+    db.run(command, [username, password, admin], function(error) {
         if (error) {
           console.log(error);
         } else {
-          console.log("Added Product of id " + user["username"], "name " + user["id"], "and password " + user["password"]);
+          console.log("Added user: " + username);
         }
     });
   });
 }
 
-exports.findUser = function(username, callback) {
-  var command = 'SELECT * FROM Users WHERE username = ?';
-
+// Retrieve in database by username
+// @param userName: given username
+// @param callback: matching user to be returned
+exports.getUser = function(username, callback) {
+  var command = 'SELECT * FROM users WHERE username = ?';
   db.serialize(() => {
     // db.all() fetches all results from an SQL query into the 'rows' variable:
     db.all(
-      command, [ username ],
+      command, [username],
       // callback function to run when the query finishes:
       (err, rows) => {
         if (rows.length != 0) {
@@ -63,7 +69,6 @@ exports.findUser = function(username, callback) {
     );
   });
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // PRODUCTS METHODS
@@ -252,3 +257,4 @@ exports.increaseQuantityById = function(productId) {
     );
   });
 }
+
