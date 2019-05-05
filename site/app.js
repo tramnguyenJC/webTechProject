@@ -114,9 +114,14 @@ var user1 = {
 
 database.createDatabase();
 
+<<<<<<< HEAD
 // database.createUser(user1["username"], user1["password"], user1["isAdmin"]);
 
 
+=======
+
+//database.insertUser(user1);
+>>>>>>> parent of aff6c2e... Stored username and password in .env
 //database.insertProduct(product);
 //database.insertProduct(product2);
 //database.insertProduct(product3);

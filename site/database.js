@@ -15,9 +15,15 @@ exports.createDatabase = function() {
     
     // Create Users table
     db.run("CREATE TABLE IF NOT EXISTS Users (" +
+<<<<<<< HEAD
       "username VARCHAR(255) PRIMARY KEY NOT NULL, " +
       "password VARCHAR(255) NOT NULL, " +
       "isAdmin BOOLEAN)");
+=======
+      "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+      "username VARCHAR(255) NOT NULL UNIQUE, " +
+      "password VARCHAR(255) NOT NULL)");
+>>>>>>> parent of aff6c2e... Stored username and password in .env
 
     db.run("CREATE TABLE IF NOT EXISTS ShoppingCart (" +
       "userid INTEGER NOT NULL, " +
