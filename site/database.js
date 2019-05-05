@@ -12,6 +12,7 @@ exports.createDatabase = function() {
       "price DOUBLE(10, 2), " +
       "quantity INT, " +
       "imgUrl TEXT)");
+    
     // Create Users table
     db.run("CREATE TABLE IF NOT EXISTS Users (" +
       "username VARCHAR(255) PRIMARY KEY NOT NULL, " +
