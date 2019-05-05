@@ -116,9 +116,14 @@ database.createDatabase();
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // database.createUser(user1["username"], user1["password"], user1["isAdmin"]);
 
 
+=======
+
+//database.insertUser(user1);
+>>>>>>> parent of aff6c2e... Stored username and password in .env
 =======
 
 //database.insertUser(user1);
