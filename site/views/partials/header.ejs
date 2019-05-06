@@ -59,17 +59,13 @@ lang="en-GB" xml:lang="en-GB">
 						<input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="Product Name" name="name" aria-label="Search">
 						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 					</form>
-
-
-			<div class="dropdown">
-					<button class="dropbtn"><li class="w3-large"><i class="material-icons w3-large">person</i></li></button>
-
-			  <div class="dropdown-content">
-					<a href="#"  data-toggle="modal" data-target="#modalLogin">Login</a>
-					<a href="#"  data-toggle="modal" data-target="#modalRegister">Register</a>
-			  </div>
-			  
-			</div>
+					<div class="dropdown">
+						<button class="dropbtn"><div class="w3-large"><i class="material-icons w3-large">person</i></div></button>
+				  		<div class="dropdown-content">
+							<a href="#"  data-toggle="modal" data-target="#modalLogin">Login</a>
+							<a href="#"  data-toggle="modal" data-target="#modalRegister">Register</a>
+				  		</div>
+					</div>
 				</div>
 			</div>
 		</nav>
@@ -81,52 +77,51 @@ lang="en-GB" xml:lang="en-GB">
 	    <div><%= errorMessage %></div> <!-- Invalid email or password! -->
 	  </div>
 	<% } %>
-	<div class="modal fade" id="modalRegister" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button class="close" type="button" data-dismiss="modal">+</button>
-					<h3 class="modal-title">Account Registration</h3>
-				</div>
-				<div class="modal-body">
-					<form action="/signup" method="post"> 
-						<input type="text" name="username" placeholder="Username" required>
-						<input type="password" name="password" placeholder="Password" required>
-						<input type="password" name="confirm_pass" placeholder="Confirm password" required>
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal fade" id="modalLogin" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button class="close" type="button" data-dismiss="modal">+</button>
-					<h3 class="modal-title">User Login</h3>
-				</div>
-				<div class="modal-body">
-					<form action="/login" method="post"> 
-						<input type="text" name="username" placeholder="Username" required>
-						<input type="password" name="password" placeholder="Password" required>
-						<button type="submit" class="btn btn-primary" >Login</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button class="button-signup" type="submit" id="signup">OR create an account here</button>
+	<section class="login">
+		<div class="modal fade" id="modalRegister" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" type="button" data-dismiss="modal">+</button>
+						<h3 class="modal-title">Account Registration</h3>
+					</div>
+					<div class="modal-body">
+						<form action="/signup" method="post"> 
+							<input type="text" name="username" placeholder="Username" required>
+							<input type="password" name="password" placeholder="Password" required>
+							<input type="password" name="confirm_pass" placeholder="Confirm password" required>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	
 
-
+		<div class="modal fade" id="modalLogin" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" type="button" data-dismiss="modal">+</button>
+						<h3 class="modal-title">User Login</h3>
+					</div>
+					<div class="modal-body">
+						<form action="/login" method="post"> 
+							<input type="text" name="username" placeholder="Username" required>
+							<input type="password" name="password" placeholder="Password" required>
+							<button type="submit" class="btn btn-primary" >Login</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button class="button-signup" type="submit" id="signup">OR create an account here</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

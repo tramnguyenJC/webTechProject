@@ -1,7 +1,7 @@
 $blue: #1686d9;
 
 h1, h3 {
-	color: white;
+	color: #1686d9;
 	font-weight: 400;
 }
 
@@ -14,19 +14,6 @@ header {
 	align-items: center;
 	img {
 		width: 30px;
-	}
-}
-
-ul {
-	list-style: none;
-}
-
-li {
-	display: inline;
-	padding: 6px;
-	a {
-		text-decoration: none;
-		color: black;
 	}
 }
 
@@ -47,7 +34,7 @@ li {
 	}
 }
 
-// MODAL STARTS HERE //
+/*// MODAL STARTS HERE //*/
 
 .bg-modal {
 	z-index: 100;
