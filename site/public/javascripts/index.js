@@ -5,7 +5,7 @@ $(document).ready(function() {
 	var popup = document.getElementById('coupon-popup');
 
 	// Get the <span> element that closes the popup
-	var closeButton = document.getElementsByClassName("coupon-close")[0];
+	var closeButton = document.getElementsByClassName("close")[0];
 
 	// When the user clicks on <span> (x), close the popup
 	closeButton.onclick = function() {

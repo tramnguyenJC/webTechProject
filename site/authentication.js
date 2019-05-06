@@ -8,7 +8,7 @@ var bcrypt = require('bcrypt');
 // expose this function to our app using module.exports
 module.exports = function(passport) {
 
-	// =========================================================================
+    // =========================================================================
     // passport session setup ==================================================
     // =========================================================================
     // required for persistent login sessions
@@ -17,7 +17,7 @@ module.exports = function(passport) {
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
         console.log("Ser");
-		done(null, user.username);
+        done(null, user.username);
     });
   
     // used to deserialize the user
@@ -36,11 +36,8 @@ module.exports = function(passport) {
     // by default, if there was no name, it would just be called 'local'
 
     passport.use(new LocalStrategy(function(username, password, done) {
-        console.log("username " + username);
-        console.log("password " + password);
         database.getUser(username, function(row) {
           if (!row){
-            console.log("cannot find any user");
             return done(null, false, "Invalid username or password");
           }
           if (row.isAdmin == false){

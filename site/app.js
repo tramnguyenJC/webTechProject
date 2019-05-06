@@ -1,4 +1,5 @@
 "use strict";
+
 require('dotenv').config()
 var bcrypt = require('bcrypt')
 var bodyParser = require('body-parser');    
@@ -20,11 +21,12 @@ var adminRouter = require('./routes/admin');
 var loginRouter = require('./routes/login');
 var signUpRouter = require('./routes/signup');     
 
-
 // User authentication dependencies
 var session = require('express-session')
 var authentication = require('./authentication');
+
 var passport = require('passport');
+var bcrypt = require('bcrypt');
 
 var app = express();
 
@@ -56,8 +58,24 @@ app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/products', productsRouter);
 app.use('/contact', contactRouter);
+
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/admin',
+    failureRedirect: '/',
+    failureFlash: true
+}));
+
 app.use('/login', loginRouter);
-app.use('/signup', signUpRouter);
+
+app.get('/admin', function(req, res, next) {
+	  console.log(req.isAuthenticated());
+	  if (req.isAuthenticated()) {
+	      next();
+	  } else {
+				res.redirect('/');
+	  }
+	});
+
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
@@ -76,11 +94,14 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-http.createServer(app).listen(app.get('port'), 'localhost',
+http.createServer(app).listen(app.get('port'),
   function(){
     console.log("Express server listening on port " + app.get('port'));
 });
 
+
+// Temporarily add data to database. After implementing feature for admin 
+// to add products on the website, get rid of this.
 database.createDatabase();
 bcrypt.hash(process.env.ADMIN_PASS, 10, function(err, hash) {
     if(err){
