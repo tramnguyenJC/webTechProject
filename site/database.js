@@ -13,6 +13,7 @@ exports.createDatabase = function() {
       "quantity INT, " +
       "imgUrl TEXT)");
     // Create Users table
+    // db.run("DROP TABLE Users");
     db.run("CREATE TABLE IF NOT EXISTS Users (" +
       "username VARCHAR(255) PRIMARY KEY NOT NULL, " +
       "password VARCHAR(255) NOT NULL, " +
@@ -53,13 +54,14 @@ exports.createUser = function(username, password, admin = false) {
 // @param userName: given username
 // @param callback: matching user to be returned
 exports.getUser = function(username, callback) {
-  var command = 'SELECT * FROM users WHERE username = ?';
+  var command = 'SELECT * FROM users WHERE username = ? ';
   db.serialize(() => {
     // db.all() fetches all results from an SQL query into the 'rows' variable:
     db.all(
       command, [username],
       // callback function to run when the query finishes:
       (err, rows) => {
+        console.log("ROWS " + rows);
         if (rows.length != 0) {
           callback(rows[0]);
         } else {

@@ -1,21 +1,25 @@
 "use strict";
 require('dotenv').config()
+var bcrypt = require('bcrypt')
+var bodyParser = require('body-parser');    
 var createError = require('http-errors');
 var cookieParser = require('cookie-parser');
+var database = require('./database.js')
 var express = require('express');
+var flash = require('connect-flash');
 var http = require('http');
 var logger = require('morgan');
 var path = require('path');
-var database = require('./database.js')
+
+// Routers
 var contactRouter = require('./routes/contact');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products');
 var adminRouter = require('./routes/admin');
 var loginRouter = require('./routes/login');
-var signUpRouter = require('./routes/signup');
-var bodyParser = require('body-parser');         
-var flash = require('connect-flash');
+var signUpRouter = require('./routes/signup');     
+
 
 // User authentication dependencies
 var session = require('express-session')
@@ -23,16 +27,6 @@ var authentication = require('./authentication');
 var passport = require('passport');
 
 var app = express();
-
-
-authentication(passport);
-
-// User Authentication
-app.use(express.static("public"));
-app.use(session({ secret: "cats" }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash()); //might need be used anyways
 
 // For POST Methods
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -49,6 +43,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// User Authentication
+app.use(express.static("public"));
+app.use(session({ secret: "cats" }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash()); //might need be used anyways
+authentication(passport);
 
 app.use('/', indexRouter);
 app.use('/index', indexRouter);
@@ -80,43 +81,16 @@ http.createServer(app).listen(app.get('port'), 'localhost',
     console.log("Express server listening on port " + app.get('port'));
 });
 
-// Temporarily add data to database. After implementing feature for admin 
-// to add products on the website, get rid of this.
-var product = {
-	"id": 1,
-	"name": "Nissin Top Ramen Beef Flavor",
-	"category": "noodles",
-	"price": 1.0,
-	"quantity": 20,
-	"imgUrl": "/images/noodles/beeframen.jpeg"
-};
-var product2 = {
-	"id": 2,
-	"name": "Yakult Probiotic Drink 80mlx5",
-	"category": "drinks",
-	"price": 3.0,
-	"quantity": 20,
-	"imgUrl": "/images/drinks/Yakult_Probiotic_Drink_80mlx5.jpg"
-};
-var product3 = {
-	"id": 3,
-	"name": "Chocopie Box of 12",
-	"category": "snacks",
-	"price": 4.0,
-	"quantity": 20,
-	"imgUrl": "/images/snacks/chocopie.jpeg"
-};
-
-var user1 = {
-	"username": process.env.ADMIN_USERNAME,
-	"password": process.env.ADMIN_PASS,
-	"isAdmin": true
-};
-
-
 database.createDatabase();
-// database.createUser(user1["username"], user1["password"], user1["isAdmin"]);
-
-//database.insertProduct(product);
-//database.insertProduct(product2);
-//database.insertProduct(product3);
+bcrypt.hash(process.env.ADMIN_PASS, 10, function(err, hash) {
+    if(err){
+        console.log("An error occured with password hashing");
+    } else {
+        var user1 = {
+			"username": process.env.ADMIN_USERNAME,
+			"password": hash,
+			"isAdmin": true
+		};
+		// database.createUser(user1["username"], user1["password"], user1["isAdmin"]);
+    }
+});
