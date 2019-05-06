@@ -7,6 +7,7 @@ $(document).ready(function() {
 	    popup.style.display = "block";
 	    sessionStorage.alreadyClicked = 1;
 	}
+	// popup.style.display = "block";
 
 	// Get the <span> element that closes the popup
 	var closeButton = document.getElementsByClassName("coupon-close")[0];

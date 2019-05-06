@@ -61,7 +61,7 @@ exports.getUser = function(username, callback) {
       command, [username],
       // callback function to run when the query finishes:
       (err, rows) => {
-        if (rows.length != 0) {
+        if (rows) {
           callback(rows[0]);
         } else {
           callback(null);
@@ -74,35 +74,150 @@ exports.getUser = function(username, callback) {
 ////////////////////////////////////////////////////////////////////////////////
 // PRODUCTS METHODS
 
-// Insert product into the database
-// @param product: dict object that contains information about the product.
-exports.insertProduct = function(product) {
+exports.addProduct = function(name, category, price, quantity, imageURL) {
+  var command = "INSERT INTO Products (name, category, price, quantity, imgUrl) ";
+  command += "VALUES (? , ? , ? , ? , ? ) ";
   db.serialize(() => {
-    var command = "INSERT INTO Products (id, name, category, price, quantity, imgUrl) ";
-    command += "VALUES (?, ?, ?, ?, ?, ?) ";
-    db.run(command, [product["id"], product["name"], product["category"],
-      product["price"], product["quantity"], product["imgUrl"]], function(error) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Added Product of id " + product["id"], " and name " + product["name"]);
-        }
+    db.run(command, [name, category, price, quantity, imageURL], function(error) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Added Product of name " + name);
+      }
     });
   });
 }
 
-exports.addProduct = function(name, category, price, quantity, imageURL) {
-  var command = "INSERT INTO Products (name, category, price, quantity, imgUrl) ";
-  command += "VALUES (?, ?, ?, ?, ?) ";
-  db.run(command, [name, category, price, quantity, imageURL], function(error) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Added Product of name " + name);
-    }
+////////////////////////////////////////////////////////////////////////////////
+// SHOPPING CART METHODS
+
+exports.addProductToCart = function(productid, username) {
+  var command = 'SELECT * FROM ShoppingCart WHERE username = ? and productid = ? ;';
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    db.all(
+      command, [username, Number(productid)],
+      // callback function to run when the query finishes:
+      (err, rows) => {
+        if (rows && rows.length != 0) {
+          var newcommand = 'UPDATE ShoppingCart SET quantity = ? where username = ? and productid = ? ';
+          var newQuantity = Number(rows[0]['quantity']) + 1;
+          db.run(
+            newcommand, [newQuantity, username, Number(productid)],
+            function(error) { 
+              if (error) {
+                console.log(error);
+              }
+            }
+          ); /// end of db.run
+        } else {
+          // No previous purchase of the same item from the same user.
+          var command = "INSERT INTO ShoppingCart (username, productid, quantity) VALUES (? , ? , ? ) ";
+          var quantity = 1;
+          db.run(command, [username, productid, quantity], function(error) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("User " + username + " added product " + productid + " to cart.");
+            }
+          }); // end of db.run(command)
+        }
+    }); // end of db.all
+  }); // end of db.serialize()
+}
+
+exports.removeOneFromCart = function(productid, username) {
+  var command = 'SELECT * FROM ShoppingCart WHERE username = ? and productid = ? ;';
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    db.all(
+      command, [username, Number(productid)],
+      // callback function to run when the query finishes:
+      (err, rows) => {
+        if (rows && rows.length != 0) {
+          var newcommand = 'UPDATE ShoppingCart SET quantity = ? where username = ? and productid = ? ';
+          var newQuantity = Number(rows[0]['quantity']) - 1;
+          if (newQuantity > 0) {
+            db.run(newcommand, [newQuantity, username, Number(productid)], function(error) { 
+              if (error) {
+                console.log(error);
+              }
+            }); /// end of db.run
+          } // end of if
+          else {
+            newcommand = 'DELETE from ShoppingCart where username = ? and productid = ? ';
+            db.run(newcommand, [username, Number(productid)], function(error) { 
+              if (error) {
+                console.log(error);
+              }
+            }); /// end of db.run
+          }
+        }
+    }); // end of db.all
+  }); // end of db.serialize()
+}
+
+exports.removeAllFromCart = function(productid, username) {
+  var command = 'SELECT * FROM ShoppingCart WHERE username = ? and productid = ? ;';
+  db.serialize(() => {
+    // db.all() fetches all results from an SQL query into the 'rows' variable:
+    db.all(
+      command, [username, Number(productid)],
+      // callback function to run when the query finishes:
+      (err, rows) => {
+        if (rows && rows.length != 0) {
+          var newcommand = 'DELETE from ShoppingCart where username = ? and productid = ? ';
+          db.run(
+            newcommand, [username, Number(productid)],
+            function(error) { 
+              if (error) {
+                console.log(error);
+              }
+            }
+          ); /// end of db.run
+        }
+    }); // end of db.all
+  }); // end of db.serialize()
+}
+
+exports.getAllProductsInShoppingCart = function(username, callback) {
+  db.serialize(() => {
+    var command = 'SELECT Products.id, Products.name, Products.category, Products.price, '
+    + 'Products.imgUrl, ShoppingCart.quantity as purchasedQuantity '
+    + 'FROM Products inner join ShoppingCart on Products.id = ShoppingCart.productid '
+    + ' where ShoppingCart.username = ? ';
+    db.all(
+      command, [username],
+      // callback function to run when the query finishes:
+      (err, rows) => {
+        if (rows) {
+          callback(rows);
+        } else {
+          callback(null);
+        }
+      }
+    );
   });
 }
 
+
+exports.getNumProductsInCart = function(user, callback) {
+  var username = user['username'];
+  db.serialize(() => {
+    var command = 'SELECT SUM(quantity) from ShoppingCart where username = ? ';
+    db.all(
+      command, [username],
+      // callback function to run when the query finishes:
+      (err, rows) => {
+        if (rows) {
+          callback(rows[0]['SUM(quantity)']);
+        } else {
+          callback(null);
+        }
+      }
+    );
+  });
+}
 
 // Retrieve product in database by product id
 // @param productId: given productId
@@ -116,7 +231,7 @@ exports.getProductById = function(productId, callback) {
       command, [Number(productId)],
       // callback function to run when the query finishes:
       (err, rows) => {
-        if (rows.length != 0) {
+        if (rows) {
           callback(rows[0]);
         } else {
           callback(null);
@@ -137,7 +252,7 @@ exports.getProductsByCategory = function(category, callback) {
       command, [category],
       // callback function to run when the query finishes:
       (err, rows) => {
-        if (rows.length != 0) {
+        if (rows) {
           callback(rows);
         } else {
           callback(null);
@@ -155,7 +270,7 @@ exports.getProductsByName = function(name, callback) {
       command, [name],
       // callback function to run when the query finishes:
       (err, rows) => {
-        if (rows.length != 0) {
+        if (rows) {
           callback(rows);
         } else {
           callback(null);
@@ -173,7 +288,7 @@ exports.getAllProducts = function(callback) {
       'SELECT * FROM Products',
       // callback function to run when the query finishes:
       (err, rows) => {
-        if (rows.length != 0) {
+        if (rows) {
           callback(rows);
         } else {
           callback(null);
@@ -187,7 +302,6 @@ exports.editProductById = function(productId, name, category, price, quantity, i
   var command = 'UPDATE Products SET name = ?, category = ?, price = ?, quantity = ?, imgUrl = ? where id = ? ';
   db.serialize(() => {
     // db.all() fetches all results from an SQL query into the 'rows' variable:
-    console.log(command);
     db.run(
       command, [name, category, Number(price), Number(quantity), imageURL, Number(productId)],
       // callback function to run when the query finishes:

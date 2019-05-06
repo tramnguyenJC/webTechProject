@@ -16,31 +16,11 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Declare categories
-var categories = ['drinks', 'noodles', 'frozen', 'health', 'snacks', 'spices', 'vegetables'];
-
-//////////////////////////////////////////////////////////////////////////////////////////
 // Retrieve all products
 router.get('/', function(req, res, next) {
   database.getAllProducts(function(products){  
-    res.render('products', {products: products, categories : categories, selectedCategory:"all"})
+    res.render('products', {products: products, selectedCategory:"all"})
   })               
-});
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// Retrieve specific products
-router.get('/:productid', (req, res) => {
-  const productId = Number(req.params.productid); // matches ':productid' above
-  
-  database.getProductById(productId, function(product) {
-    // If the retrieved product is not null (the product Id exists).
-    if (product) {
-      res.render('products', {product: product, categories: categories})
-    } else {
-      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
-      res.render('index', {errorMessage: req.flash('noProduct')});
-    }
-  });
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -49,8 +29,7 @@ router.get('/category/:category', (req, res) => {
   database.getProductsByCategory(req.params.category, function(products) {
     // If the retrieved product is not null (the product Id exists).
     if (products) {
-      res.render('products', {products: products, selectedCategory:req.params.category, 
-        categories: categories})
+      res.render('products', {products: products, selectedCategory:req.params.category})
     } else {
       req.flash('noCategory','No product with category ' + req.params.category + " exists.");
       res.render('index', {errorMessage: req.flash('noCategory')});
@@ -64,14 +43,13 @@ router.get('/category/:category/sortby/:preference', (req, res) => {
   if (req.params.category.localeCompare('all') == 0) {
     database.getAllProducts(function(products){ 
       sortProducts(products, req.params.preference);
-      res.render('products', {products: products, categories : categories, selectedCategory:"all"})
+      res.render('products', {products: products, selectedCategory:"all"})
     })  
   } else {
     database.getProductsByCategory(req.params.category, function(products) {
       if (products) {
         sortProducts(products, req.params.preference);
-        res.render('products', {products: products, selectedCategory:req.params.category, 
-          categories: categories})
+        res.render('products', {products: products, selectedCategory:req.params.category})
       } else {
         req.flash('noCategory','No product with category ' + req.params.category + " exists.");
         res.render('index', {errorMessage: req.flash('noCategory')});
@@ -105,29 +83,12 @@ function sortProducts(products, preference) {
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// Add new product
-router.get('/add', (req, res) => {
-  res.render('addproduct', {categories: categories});
-});
-
-router.post('/add',  upload.single('image'), (req, res) => {
-  var imageURL = "";
-  if (req.file) {
-    imageURL =  "/images/" + req.body.category + "/" + req.file.originalname;
-  }
-  database.addProduct(req.body.name, req.body.category, req.body.price, 
-    req.body.quantity, imageURL);
-  res.redirect('/admin');
-});
-
-//////////////////////////////////////////////////////////////////////////////////////////
 // Search for products
 router.post('/search', function(req, res, next) {
   var name = '%' + req.body.name + '%';
   database.getProductsByName(name, function(products) {
     if (products) {
-      res.render('products', {products: products, selectedCategory:'all', 
-        categories: categories})
+      res.render('products', {products: products, selectedCategory:'all'})
     } else {
       req.flash('noMatchedResult',"No matched result for " + req.body.name + " exists.");
       res.render('index', {errorMessage: req.flash('noMatchedResult')});
@@ -135,79 +96,170 @@ router.post('/search', function(req, res, next) {
   });
 });
 
-router.get('/edit/:productid', function(req, res, next) {    
-  const productId = Number(req.params.productid); // matches ':productid' above
-  database.getProductById(productId, function(product) {
-    // If the retrieved product is not null (the product Id exists).
-    if (product) {
-      res.render('editproduct', {product: product, categories: categories})
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+// MODIFY ACTIONS (ADMIN PRIVILEGES)
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// Add new product
+router.get('/add', (req, res) => {
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin) {
+      res.render('addproduct');
     } else {
-      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
-      res.render('index', {errorMessage: req.flash('noProduct')});
+      req.flash('notAdmin','User is not admin.');
+      res.render('index', {errorMessage: req.flash('notAdmin')});
     }
-  });            
+  } else {
+    req.flash('notAuthenticated','User is not authenticated.');
+    res.render('index', {errorMessage: req.flash('notAuthenticated')});
+  }     
+});
+
+router.post('/add',  upload.single('image'), (req, res) => {
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin) {
+      var imageURL = "";
+      if (req.file) {
+        imageURL =  "/images/" + req.body.category + "/" + req.file.originalname;
+      }
+      database.addProduct(req.body.name, req.body.category, req.body.price, 
+        req.body.quantity, imageURL);
+      res.redirect('/admin');
+    } else {
+      req.flash('notAdmin','User is not admin.');
+      res.render('index', {errorMessage: req.flash('notAdmin')});
+    }
+  } else {
+    req.flash('notAuthenticated','User is not authenticated.');
+    res.render('index', {errorMessage: req.flash('notAuthenticated')});
+  }   
+});
+
+router.get('/edit/:productid', function(req, res, next) {  
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin) {
+      const productid = Number(req.params.productid); // matches ':productid' above
+      database.getProductById(productid, function(product) {
+        // If the retrieved product is not null (the product Id exists).
+        if (product) {
+          res.render('editproduct', {product: product})
+        } else {
+          req.flash('noProduct','No product with id ' + productid + ' exists in database.');
+          res.render('index', {errorMessage: req.flash('noProduct')});
+        }
+      });       
+    } else {
+      req.flash('notAdmin','User is not admin.');
+      res.render('index', {errorMessage: req.flash('notAdmin')});
+    }
+  } else {
+    req.flash('notAuthenticated','User is not authenticated.');
+    res.render('index', {errorMessage: req.flash('notAuthenticated')});
+  }          
 });
 
 router.post('/edit/:productid', upload.single('image'), function(req, res, next) {
-  const productId = Number(req.params.productid); // matches ':productid' above
-  database.getProductById(productId, function(product) {
-    // If the retrieved product is not null (the product Id exists).
-    if (product) {
-      var imageURL = product['imgUrl'];
-      if (req.file) {
-        var fileName = req.body.name + "_" + req.file.originalname;
-        imageURL =  "/images/" + product['category'] + "/" + fileName.replace(/ /g, "_");
-      }
-      database.editProductById(productId, req.body.name, req.body.category, 
-        req.body.price, req.body.quantity, imageURL);
-      res.redirect('/admin');
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin) {
+      const productid = Number(req.params.productid); // matches ':productid' above
+
+      database.getProductById(productid, function(product) {
+        // If the retrieved product is not null (the product Id exists).
+        if (product) {
+          var imageURL = product['imgUrl'];
+          if (req.file) {
+            var fileName = req.body.name + "_" + req.file.originalname;
+            imageURL =  "/images/" + product['category'] + "/" + fileName.replace(/ /g, "_");
+          }
+          database.editProductById(productid, req.body.name, req.body.category, 
+            req.body.price, req.body.quantity, imageURL);
+          res.redirect('/admin');
+        } else {
+          req.flash('noProduct','No product with id ' + productid + ' exists in database.');
+          res.render('index', {errorMessage: req.flash('noProduct')});
+        }
+      });     
     } else {
-      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
-      res.render('index', {errorMessage: req.flash('noProduct')});
+      req.flash('notAdmin','User is not admin.');
+      res.render('index', {errorMessage: req.flash('notAdmin')});
     }
-  });           
+  } else {
+    req.flash('notAuthenticated','User is not authenticated.');
+    res.render('index', {errorMessage: req.flash('notAuthenticated')});
+  }       
 });
 
-router.get('/delete/:productid', function(req, res, next) {    
-  const productId = Number(req.params.productid);
-  database.getProductById(productId, function(product) {
-    // If the retrieved product is not null (the product Id exists).
-    if (product) {
-      database.deleteProductById(productId);
-      res.redirect('/admin');
+router.get('/delete/:productid', function(req, res, next) {   
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin) {
+      const productid = Number(req.params.productid);
+      database.getProductById(productid, function(product) {
+        // If the retrieved product is not null (the product Id exists).
+        if (product) {
+          database.deleteProductById(productid);
+          res.redirect('/admin');
+        } else {
+          req.flash('noProduct','No product with id ' + productid + ' exists in database.');
+          res.render('index', {errorMessage: req.flash('noProduct')});
+        }
+      });  
     } else {
-      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
-      res.render('index', {errorMessage: req.flash('noProduct')});
+      req.flash('notAdmin','User is not admin.');
+      res.render('index', {errorMessage: req.flash('notAdmin')});
     }
-  });   
+  } else {
+    req.flash('notAuthenticated','User is not authenticated.');
+    res.render('index', {errorMessage: req.flash('notAuthenticated')});
+  }    
 });
 
 router.get('/increase/:productid', function(req, res, next) {    
-  const productId = Number(req.params.productid);
-  database.getProductById(productId, function(product) {
-    // If the retrieved product is not null (the product Id exists).
-    if (product) {
-      database.increaseQuantityById(productId);
-      res.redirect('/admin');
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin) {
+      const productid = Number(req.params.productid);
+      database.getProductById(productid, function(product) {
+        // If the retrieved product is not null (the product Id exists).
+        if (product) {
+          database.increaseQuantityById(productid);
+          res.redirect('/admin');
+        } else {
+          req.flash('noProduct','No product with id ' + productid + ' exists in database.');
+          res.render('index', {errorMessage: req.flash('noProduct')});
+        }
+      });    
     } else {
-      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
-      res.render('index', {errorMessage: req.flash('noProduct')});
+      req.flash('notAdmin','User is not admin.');
+      res.render('index', {errorMessage: req.flash('notAdmin')});
     }
-  });               
+  } else {
+    req.flash('notAuthenticated','User is not authenticated.');
+    res.render('index', {errorMessage: req.flash('notAuthenticated')});
+  }            
 });
 
 router.get('/decrease/:productid', function(req, res, next) {    
-  const productId = Number(req.params.productid);
-  database.getProductById(productId, function(product) {
-    // If the retrieved product is not null (the product Id exists).
-    if (product) {
-      database.decreaseQuantityById(productId);
-      res.redirect('/admin');
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin) {
+      const productid = Number(req.params.productid);
+      database.getProductById(productid, function(product) {
+        // If the retrieved product is not null (the product Id exists).
+        if (product) {
+          database.decreaseQuantityById(productid);
+          res.redirect('/admin');
+        } else {
+          req.flash('noProduct','No product with id ' + productid + ' exists in database.');
+          res.render('index', {errorMessage: req.flash('noProduct')});
+        }
+      });      
     } else {
-      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
-      res.render('index', {errorMessage: req.flash('noProduct')});
+      req.flash('notAdmin','User is not admin.');
+      res.render('index', {errorMessage: req.flash('notAdmin')});
     }
-  });              
+  } else {
+    req.flash('notAuthenticated','User is not authenticated.');
+    res.render('index', {errorMessage: req.flash('notAuthenticated')});
+  }         
 });
 
 

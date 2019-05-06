@@ -23,14 +23,14 @@ $( function() {
     max: 20,
     values: [ 0, 10 ],
     slide: function( event, ui ) {
-      $( "#amount" ).val( "DKK " + ui.values[ 0 ] + " - DKK " + ui.values[ 1 ] );
+      $( "#amount" ).val( "DKK " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
       var mi = ui.values[0];
       var mx = ui.values[1];
       filterSystem(mi, mx);
     }
   });
   $( "#amount" ).val( " DKK " + $( "#slider-range" ).slider( "values", 0 ) +
-    " - DKK " + $( "#slider-range" ).slider( "values", 1 ) );
+    " - " + $( "#slider-range" ).slider( "values", 1 ) );
 } );
 
 

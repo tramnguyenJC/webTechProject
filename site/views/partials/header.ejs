@@ -26,6 +26,7 @@ lang="en-GB" xml:lang="en-GB">
   <link rel='stylesheet' href='/stylesheets/products-style.css'/>
   <link rel='stylesheet' href='/stylesheets/admin-style.css'/>
   <link rel='stylesheet' href='/stylesheets/login-style.css'/>
+  <link rel='stylesheet' href='/stylesheets/shopping-cart-style.css'/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 </head>
@@ -50,10 +51,13 @@ lang="en-GB" xml:lang="en-GB">
 						<li class="nav-item active">
 							<a class="nav-link" href="/index#contact">Contact</a>
 						</li>
-						<!-- @TODO: Later change this to be only visible to admin. -->
-						<li class="nav-item active">
-							<a class="nav-link" href="/admin">Admin</a>
-						</li>
+						<% if (typeof user == 'object' && user) { %>
+							<% if (user['isAdmin'] == 1) { %>
+								<li class="nav-item active">
+									<a class="nav-link" href="/admin">Admin</a>
+								</li>
+							<% } %>
+						<% } %>
 					</ul>
 					<form class="form-inline my-2 my-lg-0" action="/products/search" id="product-edit-form" method="post" role="form">
 						<input id="searchbar" class="form-control mr-sm-2" type="search" placeholder="Product Name" name="name" aria-label="Search">
@@ -66,6 +70,10 @@ lang="en-GB" xml:lang="en-GB">
 							<a href="#"  data-toggle="modal" data-target="#modalRegister">Register</a>
 				  		</div>
 					</div>
+					<a href="/shoppingcart"><span class="fa-stack fa-2x has-badge" data-count="<%=numProductsInCart%>">
+					  <i class="fa fa-circle fa-stack-2x"></i>
+					  <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
+					</span></a>
 				</div>
 			</div>
 		</nav>

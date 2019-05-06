@@ -7,7 +7,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', passport.authenticate('local', {
-    successRedirect: '/admin',
+    successRedirect: '/index',
     failureRedirect: '/login',
     failureFlash: true,
     successFlash: 'Welcome!'

@@ -26,6 +26,7 @@
 
 .preference {
     height: 40px;
+    margin-top: 10px;
 }
 
 .preference .btn-warning {

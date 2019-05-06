@@ -8,6 +8,8 @@ var http = require('http');
 var logger = require('morgan');
 var path = require('path');
 var database = require('./database.js')
+
+var cartRouter = require('./routes/shoppingcart');
 var contactRouter = require('./routes/contact');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -50,6 +52,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next){
+  res.locals.user = req.user;
+  res.locals.categories = ['drinks', 'noodles', 'frozen', 'health', 'snacks', 'spices', 'vegetables'];
+  res.locals.numProductsInCart = 0;
+  if (req.isAuthenticated()) {
+    database.getNumProductsInCart(req.user, function(count) {
+      if (count) {
+        res.locals.numProductsInCart = count;
+      } 
+    });
+  }
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/index', indexRouter);
@@ -59,6 +74,7 @@ app.use('/contact', contactRouter);
 app.use('/login', loginRouter);
 app.use('/signup', signUpRouter);
 app.use('/admin', adminRouter);
+app.use('/shoppingcart', cartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

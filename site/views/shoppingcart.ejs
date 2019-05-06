@@ -1,0 +1,57 @@
+<% include partials/header %>
+<script src="javascripts/admin.js"></script>
+<section id="shoppingcartdisplay" class="container">
+	<div class="row">
+		<div class="col-8">
+			<ul class="cart-list">
+				<% products.forEach(function(product) { %>
+					<li class="cart-item">
+						<div class="row">
+							<div class="col-3">
+								<img src="<%= product["imgUrl"]%>">
+							</div>
+							<div class="col-5">
+								<p class="product-title"> Total : <%= product["price"] * product["purchasedQuantity"]%> DKK </p>
+								<p> <%= product["name"] %>%> </p>
+								<p>Price per individual item:  <%= product["price"] %> DKK </p>
+								<p>Purchased Quantity : <%= product["purchasedQuantity"] %> items </p>
+							</div>
+							<div class="col-4">
+								<ul class="action-icons">
+								<li> <a href="/shoppingcart/removeall/<%=product["id"]%>" class="button"><i class="fas fa-times-circle fa-lg"></i></a> Delete all of this item </li>
+								<li> <a href="/shoppingcart/addone/<%=product["id"]%>" class="button"><i class="fas fa-plus-circle fa-lg"></i></i></a> Add one to cart </li>
+								<li> <a href="/shoppingcart/removeone/<%=product["id"]%>" class="button"><i class="fas fa-plus-circle fa-lg"></i></a> Remove one from cart </li>
+								<ul>
+							</div>
+						</div> <!-- end of row -->
+					</li> <!-- end of each list item (product) -->
+					<hr>
+				<% }); %>
+			</ul>
+		</div> <!-- end of class="col-9" -->
+
+		<div class="col-4 order-summary">
+			<h3>Order Summary</h3>
+			<ul>
+				<li>Subtotal <span class="float-right"><%= totalPrices %> DKK </span> <hr></li>
+				<li>Shipping <span class="float-right">5.0 DKK</span> <hr> </li>
+				<li class="discount">
+					<div> Discount Code </div>
+					<!-- action="shoppingcart/applyDiscount" -->
+					<form class="form-inline my-2 my-lg-0" id="coupon-form" role="form">
+						<input type="text" id="coupon" name="coupon" class="form-control mb-4" placeholder="Coupon Code">
+						<button class="btn btn-outline-success my-2 my-sm-0 float-right" type="submit">Submit</button>
+					</form>
+				</li>
+				
+				<li>Discount Amount <span class="float-right"> <%= discountPercent * totalPrices / 100%> DKK </span> <hr> </li>
+				<li>Total <span class="float-right"><%= totalPrices + 5.0 - discountPercent * totalPrices / 100 %> DKK</span></li>
+			</ul>
+			<hr>
+				<button class="btn btn-primary">Purchase</button>
+		</div>
+	</div>
+	
+</section>
+
+<% include partials/footer %>

@@ -8,7 +8,7 @@ padding:0;
 }
 
 body {
-  margin-top: 16px;
+  margin-top: 14px;
   font: 15px 'Raleway', sans-serif;
 }
 
@@ -52,20 +52,18 @@ header {
 	margin-left: 10px;
 }
 
+.navbar div,
+.navbar button,
+.navbar a,
 .navbar {
 	background-image: none;
-	background-color: white !important;
-}
-
-.navbar-scrolled button,
-.navbar-scrolled div,
-.navbar-scrolled a {
-	color: white !important;
-	border-color: white !important;
+	background-color: #353535 !important;
+  color: white !important;
+  border-color: white !important;
 }
 
 .navbar-scrolled {
-	opacity: 0.98;
+	opacity: 0.95;
 	background-color: #353535 !important;
 }
 
@@ -79,31 +77,10 @@ header {
 	margin: 0 5px;
 }
 
-/* Source for hovering effects:
-https://tympanus.net/codrops/2013/08/06/creative-link-effects/
-Effect style 3 */
-.navbar a::after {
-	position: absolute;
-	top: 90%;
-	left: 0;
-	width: 100%;
-	height: 3px;
-	background: rgba(0, 0, 0, 0.5);
-	content: '';
-	opacity: 0;
-	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
-	-moz-transition: opacity 0.3s, -moz-transform 0.3s;
-	transition: opacity 0.3s, transform 0.3s;
-	-webkit-transform: translateY(10px);
-	-moz-transform: translateY(10px);
-	transform: translateY(10px);
-}
-.navbar a:hover::after,
-.navbar a:focus::after {
+.navbar a:hover {
 	opacity: 1;
-	-webkit-transform: translateY(0px);
-	-moz-transform: translateY(0px);
-	transform: translateY(0px);
+  font-weight: bolder;
+  font-size: 1.04em;
 }
 
 /*******************************************************************************
