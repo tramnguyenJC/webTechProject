@@ -31,7 +31,8 @@ router.post('/', function(req, res, next) {
   };
   smtpTrans.sendMail(mailOpts, function (error, response) {
     if (error) {
-      res.send(error);
+      req.flash('sendMailError', error);
+      res.render('index', {errorMessage: req.flash('sendMailError')});
     }
     else {
       res.redirect('/index#contact');

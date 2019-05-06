@@ -3,24 +3,18 @@ var router = express.Router();
 var database = require('../database.js')
 var bcrypt = require('bcrypt')
 
-
 router.post('/', function(req, res){
-    if (!req.body.username)
-        res.send("Missing username input")
-    if (!req.body.password)
-        res.send("Missing password input")
-    if (!req.body.confirm_pass)
-        res.send("Missing confirmed password input")
-
     // Check if username already taken.
     database.getUser(req.body.username, function(user){
         if(user){
-            res.send("Username already taken")
+            req.flash('usernameTaken','Username already taken.');
+            res.render('index', {errorMessage: req.flash('usernameTaken')});
         }
     });
 
     if (req.body.password != req.body.confirm_pass && req.body.username){
-        res.send("Passwords do not match")
+        req.flash('passwordNotMatch','Password do not match.');
+        res.render('index', {errorMessage: req.flash('passwordNotMatch')});
     }else{
         // defaults to no admin access
 

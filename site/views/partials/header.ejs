@@ -76,8 +76,12 @@ lang="en-GB" xml:lang="en-GB">
 	</header> <!-- #header -->
 
 	<main>
-
-<div class="modal fade" id="modalRegister" role="dialog">
+	<% if (typeof errorMessage == 'object' && errorMessage) { %>
+	  <div class="error-message">
+	    <div><%= errorMessage %></div> <!-- Invalid email or password! -->
+	  </div>
+	<% } %>
+	<div class="modal fade" id="modalRegister" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
@@ -87,10 +91,10 @@ lang="en-GB" xml:lang="en-GB">
 				</div>
 				<div class="modal-body">
 					<form action="/signup" method="post"> 
-						<input type="text" name="username" placeholder="Username">
-						<input type="password" name="password" placeholder="Password">
-						<input type="password" name="password" placeholder="Confirm password">
-						<button type="submit" class="btn btn-primary" >Submit</button>
+						<input type="text" name="username" placeholder="Username" required>
+						<input type="password" name="password" placeholder="Password" required>
+						<input type="password" name="confirm_pass" placeholder="Confirm password" required>
+						<button type="submit" class="btn btn-primary">Submit</button>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -98,6 +102,7 @@ lang="en-GB" xml:lang="en-GB">
 			</div>
 		</div>
 	</div>
+
 	<div class="modal fade" id="modalLogin" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
@@ -108,8 +113,8 @@ lang="en-GB" xml:lang="en-GB">
 				</div>
 				<div class="modal-body">
 					<form action="/login" method="post"> 
-						<input type="text" name="username" placeholder="Username">
-						<input type="password" name="password" placeholder="Password">
+						<input type="text" name="username" placeholder="Username" required>
+						<input type="password" name="password" placeholder="Password" required>
 						<button type="submit" class="btn btn-primary" >Login</button>
 					</form>
 				</div>

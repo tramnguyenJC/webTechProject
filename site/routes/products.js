@@ -37,7 +37,8 @@ router.get('/:productid', (req, res) => {
     if (product) {
       res.render('products', {product: product, categories: categories})
     } else {
-      res.send("No product with id " + productId + " exists.");
+      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
+      res.render('index', {errorMessage: req.flash('noProduct')});
     }
   });
 });
@@ -51,7 +52,8 @@ router.get('/category/:category', (req, res) => {
       res.render('products', {products: products, selectedCategory:req.params.category, 
         categories: categories})
     } else {
-      res.send("No products of category " + req.params.category + " exists.");
+      req.flash('noCategory','No product with category ' + req.params.category + " exists.");
+      res.render('index', {errorMessage: req.flash('noCategory')});
     }
   });
 });
@@ -71,7 +73,8 @@ router.get('/category/:category/sortby/:preference', (req, res) => {
         res.render('products', {products: products, selectedCategory:req.params.category, 
           categories: categories})
       } else {
-        res.send("No products of category " + req.params.category + " exists.");
+        req.flash('noCategory','No product with category ' + req.params.category + " exists.");
+        res.render('index', {errorMessage: req.flash('noCategory')});
       }
     });
   }
@@ -126,7 +129,8 @@ router.post('/search', function(req, res, next) {
       res.render('products', {products: products, selectedCategory:'all', 
         categories: categories})
     } else {
-      res.send("No matched result for " + req.body.name + " exists.");
+      req.flash('noMatchedResult',"No matched result for " + req.body.name + " exists.");
+      res.render('index', {errorMessage: req.flash('noMatchedResult')});
     }
   });
 });
@@ -138,7 +142,8 @@ router.get('/edit/:productid', function(req, res, next) {
     if (product) {
       res.render('editproduct', {product: product, categories: categories})
     } else {
-      res.send("No product with id " + productId + " exists.");
+      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
+      res.render('index', {errorMessage: req.flash('noProduct')});
     }
   });            
 });
@@ -157,7 +162,8 @@ router.post('/edit/:productid', upload.single('image'), function(req, res, next)
         req.body.price, req.body.quantity, imageURL);
       res.redirect('/admin');
     } else {
-      res.send("No product with id " + productId + " exists.");
+      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
+      res.render('index', {errorMessage: req.flash('noProduct')});
     }
   });           
 });
@@ -170,7 +176,8 @@ router.get('/delete/:productid', function(req, res, next) {
       database.deleteProductById(productId);
       res.redirect('/admin');
     } else {
-      res.send("No product with id " + productId + " exists.");
+      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
+      res.render('index', {errorMessage: req.flash('noProduct')});
     }
   });   
 });
@@ -183,7 +190,8 @@ router.get('/increase/:productid', function(req, res, next) {
       database.increaseQuantityById(productId);
       res.redirect('/admin');
     } else {
-      res.send("No product with id " + productId + " exists.");
+      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
+      res.render('index', {errorMessage: req.flash('noProduct')});
     }
   });               
 });
@@ -196,7 +204,8 @@ router.get('/decrease/:productid', function(req, res, next) {
       database.decreaseQuantityById(productId);
       res.redirect('/admin');
     } else {
-      res.send("No product with id " + productId + " exists.");
+      req.flash('noProduct','No product with id ' + productId + ' exists in database.');
+      res.render('index', {errorMessage: req.flash('noProduct')});
     }
   });              
 });

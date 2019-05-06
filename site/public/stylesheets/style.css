@@ -111,13 +111,27 @@ Effect style 3 */
 Index Page Styling
 */
 
+/*******************************************************************************
+********************************************************************************
+Coupon Popup
+*/
+.error-message {
+  width: 100%;
+  height: 40px;
+  background-color: #EF8B09;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px;
+  padding-top: 8px;
+  text-align: center;
+}
 
 /*******************************************************************************
 ********************************************************************************
 Coupon Popup
 */
 .popup {
-  display: block;
+  display: none;
   position: fixed; /* Stay in place */
   z-index: 2; /* Sit on top */
   left: 0;
@@ -146,21 +160,21 @@ Coupon Popup
 }
 
 /* The Close Button */
-.close {
+.coupon-close {
   position: absolute;
   margin: 10px;
-  background-color: black;
+  background-color: #212121;
   color: white;
-  font-size: 40px;
-  padding: 12px 24px;
-  border: 1px solid black;
+  font-size: 20px;
+  padding: 2px 8px;
+  border: 1px solid #212121;
   cursor: pointer;
   border-radius: 5px;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
+.coupon-close:hover,
+.coupon-close:focus {
+  color: grey;
   text-decoration: none;
   cursor: pointer;
 }

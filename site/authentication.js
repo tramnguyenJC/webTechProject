@@ -4,6 +4,7 @@ var router = express.Router();
 var LocalStrategy = require('passport-local').Strategy;
 var database = require('./database.js');
 var bcrypt = require('bcrypt');
+var flash = require('connect-flash');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -35,14 +36,10 @@ module.exports = function(passport) {
     // we are using named strategies since we have one for login and one for signup
     // by default, if there was no name, it would just be called 'local'
 
-    passport.use(new LocalStrategy(function(username, password, done) {
+    passport.use(new LocalStrategy({passReqToCallback : true}, function(req, username, password, done) {
         database.getUser(username, function(row) {
           if (!row){
-            return done(null, false, "Invalid username or password");
-          }
-          if (row.isAdmin == false){
-            console.log("User is not admin");
-            return done(null, false, "User is not admin");
+            return done(null, false, req.flash('loginMessage','Invalid username or password.'));
           }
           
           bcrypt.compare(password, row.password, function(err, res) {
@@ -50,9 +47,10 @@ module.exports = function(passport) {
               // Sucessfully return user
               return done(null, row);
             } else {
-              return done(null, false, "Invalid username or password");
+              return done(null, false, req.flash('loginMessage','Invalid username or password.'));
             } 
           });
+
         });
     }));
 
