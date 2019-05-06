@@ -20,12 +20,12 @@ exports.createDatabase = function() {
       "isAdmin BOOLEAN)");
 
     db.run("CREATE TABLE IF NOT EXISTS ShoppingCart (" +
-      "userid INTEGER NOT NULL, " +
+      "username VARCHAR(255) NOT NULL, " +
       "productid INTEGER NOT NULL, " +
       "quantity INTEGER NOT NULL, " + 
       "FOREIGN KEY(productid) REFERENCES Products(id), " +
-      "FOREIGN KEY(userid) REFERENCES Users(id), " + 
-      "PRIMARY KEY (userid, productid) )");  
+      "FOREIGN KEY(username) REFERENCES Users(username), " + 
+      "PRIMARY KEY (username, productid) )");  
 
     console.log('successfully created the tables in data.db');
   });
